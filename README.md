@@ -5,6 +5,10 @@
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
+<a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/f5devcentral/f5-azure-waf-communitys/master/azuredeploy.json" target="_blank">
+  <img src="http://armviz.io/visualizebutton.png"/>
+</a>
+
 ### Description ###
 You can secure your web applications by creating a web application firewall (WAF) that uses the Local Traffic Manager™ (LTM®) and Application Security Manager™ (ASM™) modules. In Azure Security Center, the BIG-IP® VE instances are configured as a WAF for you, complete with traffic monitoring in Azure. The F5 WAF solution has more than 2600 signatures at its disposal to identify and block unwanted traffic.
 
