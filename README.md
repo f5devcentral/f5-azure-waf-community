@@ -10,7 +10,7 @@ You can secure your web applications by creating a web application firewall (WAF
 
 When you secure your applications by using an F5 WAF, the BIG-IP VE instances are all in Active status (not Active-Standby), and are used as a single WAF, for redundancy and scalability, rather than failover. If one WAF goes down, Azure will keep load balancing to the other.
 
-The F5 WAFs will be fully configured in front of your application with the base Security Blocking template that you choose.  When completed, the WAFs will pass traffic through the newly created Azure Public IP.  After some testing to make sure everything is working, you will want to complete the configuration by changing the DNS entry for your application to point at the newly created public IP address, and then locking down the Network Security Group rules to prevent any traffic from reaching your application except through the F5 WAFs.
+The F5 WAFs will be fully configured in front of your application with the base Security Blocking template that you choose.  When completed, the WAFs will pass traffic through the newly created Azure Public IP.  After acceptance testing, you will want to complete the configuration by changing the DNS entry for your application to point at the newly created public IP address, and then lock down the Network Security Group rules to prevent any traffic from reaching your application except through the F5 WAFs.
 
 The configuration will look like the following diagram, with two separate Azure resource groups: one for your application, and one for the WAF:
 
@@ -21,7 +21,7 @@ As traffic passes through the WAF, alerts are logged locally about possible viol
 ### F5 WAF instance types and pricing tiers ###
 Before you secure web applications with an F5 WAF, you need a license from F5.
 
-You choose the license and corresponding Azure instance based on the number of cores and throughput you need. The instances listed below are minimums; you can choose bigger instances if you want.
+You choose the license and corresponding Azure instance based on the number of cores and throughput you need. The instances listed below are minimums; you can choose larger instances if you want.
 
 | Cores | Througput | Minimum Azure Instance |
 | --- | --- | --- |
