@@ -86,3 +86,12 @@ After the deployment successfully finishes, you can find the BIG-IP Management U
 * Find the resource group that was deployed, which is the same name as the "dnsNameForPublicIP".  When you click on this object you will see the deployment status.  
 * Click on the deployment status, and then the deployment.  
 * In the "Outputs" section you will find the URL's and ports that you can use to connect to the F5 WAF cluster. 
+
+### Viewing and clearing security violations ###
+
+From the BIG-IP Management UI, you can view and accept/ignore detected security violations:
+
+* Click Security > Event Logs > Application > Requests
+* From the Requests List, select the illegal request you want to view
+* Select an action to be performed for future occurences of this violation
+* From the top menu, click Apply Policy to apply the changes
