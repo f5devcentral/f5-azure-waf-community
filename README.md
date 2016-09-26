@@ -1,4 +1,4 @@
-# Azure-WAF
+# Azure WAF Community
 Deploy F5 WAF Solution in Azure  
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Fazuredeploy.json" target="_blank">
@@ -6,9 +6,19 @@ Deploy F5 WAF Solution in Azure
 </a>
 
 ### Description:
+You can secure your web applications by creating a web application firewall (WAF) that uses the Local Traffic Manager™ (LTM®) and Application Security Manager™ (ASM™) modules. In Azure Security Center, the BIG-IP® VE instances are configured as a WAF for you, complete with traffic monitoring in Azure. The F5 WAF solution has more than 2600 signatures at its disposal to identify and block unwanted traffic.
+
+When you secure your applications by using an F5 WAF, the BIG-IP VE instances are all in Active status (not Active-Standby), and are used as a single WAF, for redundancy and scalability, rather than failover. If one WAF goes down, Azure will keep load balancing to the other.
+
 The F5 WAFs will be fully configured in front of your application with the base Security Blocking template that you choose.  When completed, the WAFs will pass traffic through the newly created Azure Public IP.  After some testing to make sure everything is working, you will want to complete the configuration by changing the DNS entry for your application to point at the newly created public IP address, and then locking down the Network Security Group rules to prevent any traffic from reaching your application except through the F5 WAFs.
 
-### Parameter Definitions: ###
+The configuration will look like the following diagram, with two separate Azure resource groups: one for your application, and one for the WAF:
+
+![screenshot](WAF_1.png)
+
+As traffic passes through the WAF, alerts are logged locally about possible violations. The amount of traffic that is flagged depends on the security blocking level you choose when you create the WAF.
+
+### Template Parameters: ###
 
 * location
   * Required
