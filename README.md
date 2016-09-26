@@ -5,7 +5,7 @@
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-<a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/f5devcentral/f5-azure-waf-communitys/master/azuredeploy.json" target="_blank">
+<a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/f5devcentral/f5-azure-waf-community/master/azuredeploy.json" target="_blank">
   <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
