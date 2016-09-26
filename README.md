@@ -48,37 +48,41 @@ You cannot change the security blocking level after you create the WAF, so be su
 
 | Parameter | Required | Description |
 | --- | --- | --- |
-| location | x | Choose the Azure region where you want to install these Web Application Firewalls.  This should be the same region where your application is deployed. | 
-| numberOFWAFs | x | The number of Web Application Firewalls (2) that will be deployed in front of your application. |
+| location | x | The location where the web application's resource group resides. | 
+| numberOFWAFs | x | The number of WAFs that will be deployed in front of your application.  The only allowed value for this template is 2. |
 | vmSize | x | Choose the size of the Azure Virtual Machine instance from the list. |
-| adminUsername | x | User name to login to the Web Application Firewall. |
-| adminPassword | x | Password to login to the Web Application Firewall. |
-| dnsNameForPublicIP | x | Unique DNS Name for the public IP address used to access the Web Application Firewalls for management. |
-| licenseToken1 | x | The license token for the first F5 Web Application Firewall. |
-| licenseToken2 | x | The license token for the second F5 Web Application Firewall. |
-| applicationName | x | Please provide a simple name for your application. |
+| adminUsername | x | A user name to login to the WAFs.  The default value is "azureuser". |
+| adminPassword | x | A strong password for the WAFs. Remember this password; you will need it later. |
+| dnsNameForPublicIP | x | Unique DNS Name for the public IP address used to access the WAFs for management. |
+| licenseToken1 | x | The license token from the F5 licensing server. This license will be used for the first F5 WAF. |
+| licenseToken2 | x | The license token from the F5 licensing server. This license will be used for the second F5 WAF. |
+| applicationName | x | A simple name for your application. |
 | applicationProtocols | x | A semi-colon separated list of protocols (http;https) that will be used to configure the application virtual servers (for example, http for port 80 and/or https for SSL). |
 | applicationAddress | x | The public IP address or DNS FQDN of the application that this WAF will protect. |
 | applicationPorts | x | A semi-colon separated list of ports that your application is listening on (for example, 80 and 443). |
-| applicationType | x | Select the operating system on which your application is running. (Linux OS or Windows OS). |
-| blockingLevel | x | Please select the security blocking level for this WAF deployment.  The more aggressive the blocking level, the more potential there is for the WAF to detect "false positive" violations. |
+| applicationType | x | The operating system on which your application is running. (Linux OS or Windows OS). |
+| blockingLevel | x | The level of traffic you want to flag as unsecure. All applications behind the WAF will use this level. The higher the level, the more traffic that is blocked. The lower the level, the more chances that unsecure traffic will make it through to your application. See the Security blocking levels topic for more information. |
 | applicationFQDN | x | The fully-qualified domain name of your application (for example, www.example.com). |
 | applicationCertificate | x | The path to the SSL certificate file. This is only required when you are deploying WAF in front of an HTTPS application. |
 | applicationKey | x | The path to the SSL key file.  This is only required when you are deploying WAF in front of an HTTPS application. |
 | applicationChain |  | The path to the SSL chain file. |
 
-### What gets deployed ###
+### Results ###
 
-This template will create a new resource group, and inside this new resource group it will configure the following;
+This template will create a new resource group, and inside this new resource group it will configure the following:
 
 * Availability Set
 * Azure Load Balancer
 * Network Security Group
-* Storage Container
+* Storage Account
 * Public IP Address
-* NIC objects for the F5 WAF devices.
+* Network Interface objects for the F5 WAF devices
 * F5 WAF Virtual Machines
 
 ### How to connect to your Web Application Firewalls to manage them ###
 
-After the deployment successfully finishes, you can find the BIG-IP Management UI\SSH URLs by doing the following: Find the resource group that was deployed, which is the same name as the "dnsNameForPublicIP".  When you click on this object you will see the deployment status.  Click on the deployment status, and then the deployment.  In the "Outputs" section you will find the URL's and ports that you can use to connect to the F5 WAF cluster. 
+After the deployment successfully finishes, you can find the BIG-IP Management UI\SSH URLs by doing the following: 
+
+* Find the resource group that was deployed, which is the same name as the "dnsNameForPublicIP".  When you click on this object you will see the deployment status.  
+* Click on the deployment status, and then the deployment.  
+* In the "Outputs" section you will find the URL's and ports that you can use to connect to the F5 WAF cluster. 
