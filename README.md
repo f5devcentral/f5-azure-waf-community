@@ -1,5 +1,5 @@
-# Azure WAF Community
-Deploy F5 WAF Solution in Azure  
+### Azure Web Application Firewall Community Template ###
+### Deploy F5 WAF Solution in Azure ###
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -44,7 +44,7 @@ All traffic that is not being blocked is being used by the WAF for learning. Ove
 
 You cannot change the security blocking level after you create the WAF, so be sure that you select the correct level.
 
-### Template Parameters ###
+### Template parameters ###
 
 | Parameter | Required | Description |
 | --- | --- | --- |
