@@ -79,7 +79,7 @@ This template will create a new resource group, and inside this new resource gro
 * Network Interface objects for the F5 WAF devices
 * F5 WAF Virtual Machines
 
-### How to connect to your Web Application Firewalls to manage them ###
+### Connecting to the management interface of the Web Application Firewalls ###
 
 After the deployment successfully finishes, you can find the BIG-IP Management UI\SSH URLs by doing the following: 
 
