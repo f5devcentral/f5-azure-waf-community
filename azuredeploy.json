@@ -554,8 +554,8 @@
         "typeHandlerVersion": "1.2",
         "settings": {
           "fileUris": [
-            "https://raw.githubusercontent.com/f5devcentral/f5-azure-waf-community/azuresecurity.sh",
-            "https://raw.githubusercontent.com/f5devcentral/f5-azure-waf-community/start.sh"
+            "https://raw.githubusercontent.com/f5devcentral/f5-azure-waf-community/master/azuresecurity.sh",
+            "https://raw.githubusercontent.com/f5devcentral/f5-azure-waf-community/master/start.sh"
           ],
           "commandToExecute": "[concat('bash start.sh ','false',';',concat(variables('wafNamePrefix'),add(copyindex(),1)),';',concat(variables('ipAddress'),add(add(4,copyindex()),1),';',parameters('adminPassword'),';',parameters('licenseToken2'),';',toLower(parameters('applicationName')),';',concat(variables('wafNamePrefix'),0),';',concat(variables('ipAddress'),4),' 880;8444 ',parameters('applicationProtocols'),' ',parameters('applicationAddress'),';',replace(toLower(parameters('location')),' ',''),' ',parameters('applicationPorts'),' ',toLower(parameters('applicationType')),';',toLower(parameters('blockingLevel')),';',toLower(parameters('applicationFQDN')),';',parameters('applicationCertificate'),';',parameters('applicationKey'),';',parameters('applicationChain')))]"
         }
