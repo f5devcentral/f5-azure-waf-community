@@ -67,9 +67,9 @@ You cannot change the security blocking level after you create the WAF, so be su
 | applicationType | x | The operating system on which your application is running. (Linux OS or Windows OS). |
 | blockingLevel | x | The level of traffic you want to flag as unsecure. All applications behind the WAF will use this level. The higher the level, the more traffic that is blocked. The lower the level, the more chances that unsecure traffic will make it through to your application. See the Security blocking levels topic for more information. |
 | applicationFQDN | x | The fully-qualified domain name of your application (for example, www.example.com). |
-| applicationCertificate | x | The path to the SSL certificate file. This is only required when you are deploying WAF in front of an HTTPS application. |
-| applicationKey | x | The path to the SSL key file.  This is only required when you are deploying WAF in front of an HTTPS application. |
-| applicationChain |  | The path to the SSL chain file. |
+| applicationCertificate | x | The public URL of the SSL certificate file. This is only required when you are deploying WAF in front of an HTTPS application.  For demonstration purposes only - Do NOT use a production certificate. |
+| applicationKey | x | The public URL of the SSL key file.  This is only required when you are deploying WAF in front of an HTTPS application.  For demonstration purposes only - Do NOT use a production key. |
+| applicationChain |  | The public URL of the SSL chain file. |
 
 ### Results ###
 
