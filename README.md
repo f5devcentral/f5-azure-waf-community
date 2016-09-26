@@ -46,60 +46,26 @@ You cannot change the security blocking level after you create the WAF, so be su
 
 ### Template Parameters ###
 
-* location
-  * Required
-  * Choose the data center you want to install these Web Application Firewalls into from the drop down list.
-* numberOFWAFs
-  * Required
-  * The number of Web Application Firewalls (2) that will be deployed in front of your application.
-* vmSize
-  * Required
-  * Choose the size of the Azure Virtual Machine instance from the list.
-* adminUsername
-  * Required
-  * User name to login to the Web Application Firewall.
-* adminPassword
-  * Required
-  * Password to login to the Web Application Firewall.
-* dnsNameForPublicIP
-  * Required
-  * Unique DNS Name for the public IP address used to access the Web Application Firewalls for management.
-* licenseToken1
-  * Required
-  * The license token for the first F5 Web Application Firewall.
-* licenseToken2
-  * The license token for the second F5 Web Application Firewall.
-* applicationName
-  * Required
-  * Please provide a simple name for your application.
-* applicationProtocols
-  * Required
-  * A semi-colon separated list of protocols (http;https) that will be used to configure the application virtual servers, (e.g. http for port 80 and https for SSL).
-* applicationAddress
-  * Required
-  * The public IP address or DNS FQDN of the application that this WAF is for.
-* applicationPorts
-  * Required
-  * A semi-colon separated list of ports, (80;443) that your application is listening on, (e.g. 80 and 443).
-* applicationType
-  * Required
-  * Select the operating system that your application is running on. (Linux OS or a Windows OS)
-* blockingLevel
-  * Required
-  * Please select the security blocking level for this WAF deployment.  Remember that the more aggressive the blocking level, the more potential there is for the WAF to detect "false positive" violations.
-* applicationFQDN
-  * Required
-  * The fully-qualified domain name of your application. (e.g. www.example.com).
-* applicationCertificate
-  * Optional
-  * The path to the SSL certificate file.
-* applicationKey
-  * Optional
-  * The path to the SSL key file.
-* applicationChain
-  * Optional
-  * The path to the SSL chain file.
-
+| Parameter | Required | Description |
+| --- | --- | --- |
+| location | x | Choose the Azure region where you want to install these Web Application Firewalls.  This should be the same region where your application is deployed. | 
+| numberOFWAFs | x | The number of Web Application Firewalls (2) that will be deployed in front of your application. |
+| vmSize | x | Choose the size of the Azure Virtual Machine instance from the list. |
+| adminUsername | x | User name to login to the Web Application Firewall. |
+| adminPassword | x | Password to login to the Web Application Firewall. |
+| dnsNameForPublicIP | x | Unique DNS Name for the public IP address used to access the Web Application Firewalls for management. |
+| licenseToken1 | x | The license token for the first F5 Web Application Firewall. |
+| licenseToken2 | x | The license token for the second F5 Web Application Firewall. |
+| applicationName | x | Please provide a simple name for your application. |
+| applicationProtocols | x | A semi-colon separated list of protocols (http;https) that will be used to configure the application virtual servers (for example, http for port 80 and/or https for SSL). |
+| applicationAddress | x | The public IP address or DNS FQDN of the application that this WAF will protect. |
+| applicationPorts | x | A semi-colon separated list of ports that your application is listening on (for example, 80 and 443). |
+| applicationType | x | Select the operating system on which your application is running. (Linux OS or Windows OS). |
+| blockingLevel | x | Please select the security blocking level for this WAF deployment.  The more aggressive the blocking level, the more potential there is for the WAF to detect "false positive" violations. |
+| applicationFQDN | x | The fully-qualified domain name of your application (for example, www.example.com). |
+| applicationCertificate | x | The path to the SSL certificate file. This is only required when you are deploying WAF in front of an HTTPS application. |
+| applicationKey | x | The path to the SSL key file.  This is only required when you are deploying WAF in front of an HTTPS application. |
+| applicationChain |  | The path to the SSL chain file. |
 
 ### What gets deployed ###
 
