@@ -50,7 +50,7 @@ You cannot change the security blocking level after you create the WAF, so be su
 | --- | --- | --- |
 | location | x | The location where the web application's resource group resides. | 
 | numberOFWAFs | x | The number of WAFs that will be deployed in front of your application.  The only allowed value for this template is 2. |
-| vmSize | x | Choose the size of the Azure Virtual Machine instance from the list. |
+| vmSize | x | The desired Azure Virtual Machine instance size. |
 | adminUsername | x | A user name to login to the WAFs.  The default value is "azureuser". |
 | adminPassword | x | A strong password for the WAFs. Remember this password; you will need it later. |
 | dnsNameForPublicIP | x | Unique DNS Name for the public IP address used to access the WAFs for management. |
