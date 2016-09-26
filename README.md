@@ -15,7 +15,7 @@ The F5 WAFs will be fully configured in front of your application with the base 
   * Choose the data center you want to install these Web Application Firewalls into from the drop down list.
 * numberOFWAFs
   * Required
-  * The number of Web Application Firewalls (Up to 4) that will be deployed infront of your application.
+  * The number of Web Application Firewalls (2) that will be deployed in front of your application.
 * vmSize
   * Required
   * Choose the size of the Virtual Machine Instance from the list.
