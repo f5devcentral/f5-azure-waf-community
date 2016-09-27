@@ -61,11 +61,11 @@ You cannot change the security blocking level after you create the WAF, so be su
 | licenseToken1 | x | The license token from the F5 licensing server. This license will be used for the first F5 WAF. |
 | licenseToken2 | x | The license token from the F5 licensing server. This license will be used for the second F5 WAF. |
 | applicationName | x | A simple name for your application. |
-| applicationProtocols | x | A semi-colon separated list of protocols (http;https) that will be used to configure the application virtual servers (for example, http for port 80 and/or https for SSL). |
+| applicationProtocols | x | A semi-colon separated list of protocols (http;https) that will be used to configure the application virtual servers (for example, http for port 80 and/or https for SSL). The only allowed value for this template is "http;https". |
 | applicationAddress | x | The public IP address or DNS FQDN of the application that this WAF will protect. |
-| applicationPorts | x | A semi-colon separated list of ports that your application is listening on (for example, 80 and 443). |
+| applicationPorts | x | A semi-colon separated list of ports that your application is listening on (for example, 80 and 443). The only allowed value for this template is "80;443". |
 | applicationType | x | The operating system on which your application is running. (Linux OS or Windows OS). |
-| blockingLevel | x | The level of traffic you want to flag as unsecure. All applications behind the WAF will use this level. The higher the level, the more traffic that is blocked. The lower the level, the more chances that unsecure traffic will make it through to your application. See the Security blocking levels topic for more information. |
+| blockingLevel | x | The level of traffic you want to flag as insecure. All applications behind the WAF will use this level. The higher the level, the more traffic that is blocked. The lower the level, the more chances that unsecure traffic will make it through to your application. See the Security blocking levels topic for more information. |
 | applicationFQDN | x | The fully-qualified domain name of your application (for example, www.example.com). |
 | applicationCertificate | x | The public URL of the SSL certificate file. This is only required when you are deploying WAF in front of an HTTPS application.  For demonstration purposes only - Do NOT use a production certificate. |
 | applicationKey | x | The public URL of the SSL key file.  This is only required when you are deploying WAF in front of an HTTPS application.  For demonstration purposes only - Do NOT use a production key. |
