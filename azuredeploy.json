@@ -94,7 +94,7 @@
       "defaultValue": "http;https",
       "allowedValues": [
           "http;https"
-      ]
+      ],
       "metadata": {
         "description": "A semi-colon separated list of protocols (http;https) that will be used to configure the WAF's VIP's, (e.g. http for port 80 and https for SSL)."
       }
@@ -110,7 +110,7 @@
       "defaultValue": "80;443",
       "allowedValues": [
           "80;443"
-      ]
+      ],
       "metadata": {
         "description": "A semi-colon separated list of ports, (80;443) that your applicaiton is listening on, (e.g. 80 and 443)."
       }
