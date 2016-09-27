@@ -323,14 +323,14 @@
             }
           },
           {
-            "name": "app_rule_8444",
+            "name": "app_rule_8445",
             "properties": {
               "description": "",
               "priority": 104,
               "sourceAddressPrefix": "*",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*",
-              "destinationPortRange": "8444",
+              "destinationPortRange": "8445",
               "protocol": "TCP",
               "direction": "Inbound",
               "access": "Allow"
@@ -382,7 +382,7 @@
             }
           },
           {
-            "Name": "lbrule8444",
+            "Name": "lbrule8445",
             "properties": {
               "frontendIPConfiguration": {
                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
@@ -391,11 +391,11 @@
                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
               },
               "probe": {
-                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/lbprobe8444')]"
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/lbprobe8445')]"
               },
               "protocol": "Tcp",
               "frontendPort": 443,
-              "backendPort": 8444,
+              "backendPort": 8445,
               "idleTimeoutInMinutes": 15
             }
           }
@@ -413,11 +413,11 @@
           {
             "properties": {
               "protocol": "Tcp",
-              "port": 8444,
+              "port": 8445,
               "intervalInSeconds": 15,
               "numberOfProbes": 2
             },
-            "name": "lbprobe8444"
+            "name": "lbprobe8445"
           }
         ]
       },
