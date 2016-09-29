@@ -590,6 +590,26 @@
           "commandToExecute": "[concat('./runScripts.sh --onboard \" --output /var/log/onboard.log --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), copyindex(1), '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseToken2'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none\" --cluster \" --output /var/log/cluster.log --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 5), ' --join-group --device-group Sync --sync --remote-host ', concat(variables('ipAddress'), 4), ' --remote-user admin --remote-password ', parameters('adminPassword'), '\"')]"
         }
       }
+    },
+    {
+      "name": "iAppDeployment",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "dependsOn": [ 
+          "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1),'/extensions/start')]" 
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "https://raw.githubusercontent.com/edwoodjrjr/f5-azure-waf-community/develop/iAppDeployment.json",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "param1": { "value": "foo" },
+          "apiVersion": { "value": "2015-05-01-preview" },
+          "location": { "value": "[parameters('location')]" }
+        } 
+      }
     }
   ],
   "outputs": {
