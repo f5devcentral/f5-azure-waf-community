@@ -2,12 +2,19 @@
 	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
+          "waf0Prefix": {
+               "type": "string",
+               "minLength": "1",
+               "metadata": {
+                    "description": "Prefix of the first WAF"
+               }
+          }
 	},
 	"variables": {
 	},
 	"resources": [{
 		"type": "Microsoft.Compute/virtualMachines/extensions",
-		"name": "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1), '/iAppDeployment')]",
+		"name": "[concat('Microsoft.Compute/virtualMachines/',parameters('waf0Prefix'),0), '/iAppDeployment')]",
 		"location": "[resourceGroup().location]",
 		"apiVersion": "2015-01-01",
 		"tags": {
