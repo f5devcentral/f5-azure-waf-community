@@ -542,7 +542,7 @@
       "name": "[variables('newStorageAccountName')]",
       "type": "Microsoft.Storage/storageAccounts",
       "location": "[parameters('location')]",
-      "apiVersion": "2015-01-01",
+      "apiVersion": "2015-06-15",
       "properties": {
         "accountType": "Standard_LRS"
       }
@@ -550,7 +550,7 @@
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('wafNamePrefix'),0,'/start')]",
-      "apiVersion": "2015-01-01",
+      "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),0)]"
@@ -574,7 +574,7 @@
         "count": "[sub(parameters('numberOfWAFs'), 1)]"
       },
       "name": "[concat(variables('wafNamePrefix'),add(copyindex(),1),'/start')]",
-      "apiVersion": "2015-01-01",
+      "apiVersion": "2015-06-15",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1))]"
