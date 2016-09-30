@@ -14,7 +14,7 @@
 	},
 	"resources": [{
 		"type": "Microsoft.Compute/virtualMachines/extensions",
-		"name": "[concat('Microsoft.Compute/virtualMachines/', parameters('waf0Prefix'),0), '/iAppDeployment')]",
+		"name": "iAppDeployment",
 		"location": "[resourceGroup().location]",
 		"apiVersion": "2015-01-01",
 		"tags": {
@@ -29,7 +29,7 @@
                  "http://cdn.f5.com/product/blackbox/staging/azure/deploy_iapp.sh"
                 ]
 			},
-			"commandToExecute": "sh deploy_iapp.sh"
+			"commandToExecute": " sh deploy_iapp.sh"
 		}
 	}],
 	"outputs": {}
