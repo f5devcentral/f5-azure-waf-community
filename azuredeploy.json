@@ -561,9 +561,10 @@
         "typeHandlerVersion": "1.2",
         "settings": {
           "fileUris": [
-            "https://f5cloudlibs.blob.core.windows.net/archive/runScripts.sh"        
+            "https://f5cloudlibs.blob.core.windows.net/archive/runScripts.sh",
+            "http://cdn.f5.com/product/blackbox/staging/azure/deploy_iapp.sh"
           ],
-          "commandToExecute": "[concat('./runScripts.sh --onboard \" --output /var/log/onboard.log --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseToken1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none \" --cluster \" --output /var/log/cluster.log --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 4), ' --create-group --device-group Sync --sync-type sync-failover --device ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --auto-sync --save-on-auto-sync --asm-sync', '\"')]"
+          "commandToExecute": "[concat('./runScripts.sh --onboard \" --output /var/log/onboard.log --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseToken1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none \" --runScript \" --output /var/log/runScript.log --f deploy_iapp.sh --log-level debug \" --cluster \" --output /var/log/cluster.log --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 4), ' --create-group --device-group Sync --sync-type sync-failover --device ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --auto-sync --save-on-auto-sync --asm-sync', '\"')]"
         }
       }
     },
@@ -589,26 +590,6 @@
           ],
           "commandToExecute": "[concat('./runScripts.sh --onboard \" --output /var/log/onboard.log --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), copyindex(1), '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseToken2'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none\" --cluster \" --output /var/log/cluster.log --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 5), ' --join-group --device-group Sync --sync --remote-host ', concat(variables('ipAddress'), 4), ' --remote-user admin --remote-password ', parameters('adminPassword'), '\"')]"
         }
-      }
-    },
-    {
-      "name": "iAppDeployment",
-      "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
-      "dependsOn": [ 
-          "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),0, '/extensions/start')]" 
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "https://raw.githubusercontent.com/edwoodjrjr/f5-azure-waf-community/develop/iAppDeployment.json",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "waf0Prefix": { 
-               "value": "[variables('wafNamePrefix')]"
-          }
-        } 
       }
     }
   ],
