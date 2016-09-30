@@ -14,7 +14,7 @@
 	},
 	"resources": [{
 		"type": "Microsoft.Compute/virtualMachines/extensions",
-		"name": "iAppDeployment",
+		"name": "[concat('Microsoft.Compute/virtualMachines/', parameters('waf0Prefix'),0, '/iAppDeployment')]",
 		"location": "[resourceGroup().location]",
 		"apiVersion": "2015-01-01",
 		"tags": {
