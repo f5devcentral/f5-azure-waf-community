@@ -594,7 +594,7 @@
     {
       "name": "iAppDeployment",
       "type": "Microsoft.Resources/deployments",
-      "apiVersion": "2015-01-01",
+      "apiVersion": "2015-05-01-preview",
       "dependsOn": [ 
           "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1),'/extensions/start')]" 
       ],
@@ -605,9 +605,6 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "param1": { "value": "foo" },
-          "apiVersion": { "value": "2015-05-01-preview" },
-          "location": { "value": "[parameters('location')]" }
         } 
       }
     }

@@ -1,0 +1,29 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+	},
+	"variables": {
+	},
+	"resources": [{
+		"type": "Microsoft.Compute/virtualMachines/extensions",
+		"name": "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1), '/iAppDeployment')]",
+		"location": "[resourceGroup().location]",
+		"apiVersion": "2015-01-01",
+		"tags": {
+			"displayName": "iAppDeployment"
+		},
+		"properties": {
+             "publisher": "Microsoft.OSTCExtensions",
+             "type": "CustomScriptForLinux",
+             "typeHandlerVersion": "1.2",
+             "settings": {
+               "fileUris": [
+                 "http://cdn.f5.com/product/blackbox/staging/azure/deploy_iapp.sh"
+                ]
+			},
+			"commandToExecute": "sh deploy_iapp.sh"
+		}
+	}],
+	"outputs": {}
+}
