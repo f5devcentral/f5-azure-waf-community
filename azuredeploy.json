@@ -596,7 +596,7 @@
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2015-05-01-preview",
       "dependsOn": [ 
-          "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),0),'/extensions/start')]" 
+          "[concat('Microsoft.Compute/virtualMachines/', variables('wafNamePrefix'),0), '/extensions/start')]" 
       ],
       "properties": {
         "mode": "Incremental",
