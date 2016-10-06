@@ -575,7 +575,7 @@
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
         "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.2",
+        "typeHandlerVersion": "1.7",
         "settings": {
           "fileUris": [
             "https://f5cloudlibs.blob.core.windows.net/archive/runScripts.js"
@@ -601,7 +601,7 @@
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
         "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.2",
+        "typeHandlerVersion": "1.7",
         "settings": {
           "fileUris": [
             "https://f5cloudlibs.blob.core.windows.net/archive/runScripts.js"
