@@ -92,7 +92,7 @@
     "applicationProtocols": {
       "type": "string",
       "defaultValue": "http",
-      "allowedValues": [ "http", "https", "http-https" ],
+      "allowedValues": [ "http", "https", "http-https", "https-offload" ],
       "metadata": {
         "description": "The protocol(s) that will be used to configure the WAF's VIP's, (e.g. http for port 80, https for SSL, or http-https for both.)."
       }
@@ -186,7 +186,7 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "singleQuote": "'",
-    "commandArgs": "[toLower(concat(variables('singleQuote'), parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'), ' ', parameters('applicationServiceSecurePort'), ' ', parameters('applicationType'), ' ', parameters('blockingLevel'), ' ', parameters('applicationProtocols'), variables('singleQuote')))]"
+    "commandArgs": "[toLower(concat(variables('singleQuote'), parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'), ' ', parameters('applicationServiceSecurePort'), ' ', parameters('applicationType'), ' ', parameters('blockingLevel'), ' ', parameters('applicationProtocols'), ' ', parameters('adminUsername'), ' ', parameters('adminPassword'), variables('singleQuote')))]"
   },
   "resources": [
     {
