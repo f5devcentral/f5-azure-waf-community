@@ -185,7 +185,8 @@
     "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('dnsNameForPublicIP'))]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-    "commandArgs": "[toLower(concat( ' \' ', parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'), ' ', parameters('applicationServiceSecurePort'), ' ', parameters('applicationType'), ' ', parameters('blockingLevel'), ' ', parameters('applicationProtocols'), ' \' ' ))]"
+    "singleQuote": "'",
+    "commandArgs": "[toLower(concat(variables('singleQuote'), parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'), ' ', parameters('applicationServiceSecurePort'), ' ', parameters('applicationType'), ' ', parameters('blockingLevel'), ' ', parameters('applicationProtocols'), variables('singleQuote')))]"
   },
   "resources": [
     {
