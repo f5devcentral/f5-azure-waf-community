@@ -80,7 +80,8 @@
       "type": "string",
       "metadata": {
         "description": "The license token for the second F5 Web Application Firewall."
-      }
+      },
+      "defaultValue": ""
     },
     "applicationName": {
       "type": "string",
@@ -108,7 +109,7 @@
       "defaultValue": "80",
       "metadata": {
         "description": "If deploying an HTTP application, the port on which your service listens for unencrypted traffic."
-      }
+      },
     },
     "applicationServiceSecurePort": {
       "type": "string",
@@ -151,19 +152,22 @@
       "type": "string",
       "metadata": {
         "description": "The Azure Key vault where SSL certificates are stored"
-      }
+      },
+      "defaultValue": ""
     },
     "vaultResourceGroup": {
       "type": "string",
       "metadata": {
         "description": "Resource Group of the key vault"
-      }
+      },
+      "defaultValue": ""
     },
     "httpssecretUrlWithVersion": {
       "type": "string",
       "metadata": {
         "description": "full Key Vault Id to the secret that stores the SSL cert"
-      }
+      },
+      "defaultValue": ""
     }
   },
   "variables": {
