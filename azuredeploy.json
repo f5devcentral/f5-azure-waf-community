@@ -79,7 +79,7 @@
     "licenseToken2": {
       "type": "string",
       "metadata": {
-        "description": "The license token for the second F5 Web Application Firewall."
+        "description": "The license token for the second F5 Web Application Firewall. This field is required when deploying two or more WAFs."
       },
       "defaultValue": ""
     },
@@ -108,14 +108,14 @@
       "type": "string",
       "defaultValue": "80",
       "metadata": {
-        "description": "If deploying an HTTP application, the port on which your service listens for unencrypted traffic."
+        "description": "If deploying an HTTP application, the port on which your service listens for unencrypted traffic. This field is not required when deploying https only."
       },
     },
     "applicationServiceSecurePort": {
       "type": "string",
       "defaultValue": "443",
       "metadata": {
-        "description": "If deploying an HTTPS application, the port on which your service listens for encrypted traffic."
+        "description": "If deploying an HTTPS application, the port on which your service listens for encrypted traffic. This field is not required when deploying http only."
       }
     },
     "applicationType": {
@@ -151,21 +151,21 @@
     "vaultName": {
       "type": "string",
       "metadata": {
-        "description": "The Azure Key vault where SSL certificates are stored"
+        "description": "The Azure Key vault where SSL certificates are stored. This field is not required when deploying http only."
       },
       "defaultValue": ""
     },
     "vaultResourceGroup": {
       "type": "string",
       "metadata": {
-        "description": "Resource Group of the key vault"
+        "description": "Resource Group of the key vault. This field is not required when deploying http only."
       },
       "defaultValue": ""
     },
     "httpssecretUrlWithVersion": {
       "type": "string",
       "metadata": {
-        "description": "full Key Vault Id to the secret that stores the SSL cert"
+        "description": "full Key Vault Id to the secret that stores the SSL cert. This field is not required when deploying http only."
       },
       "defaultValue": ""
     }
