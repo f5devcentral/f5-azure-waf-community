@@ -132,14 +132,22 @@
     "blockingLevel": {
       "type": "string",
       "metadata": {
-        "description": "Please select how aggressive you would like the blocking level of this WAF to be.  Remember that the more aggressive the blocking level, the more potential there is for false-positives that the WAF might detect."
+        "description": "Please select how aggressive you would like the blocking level of this WAF to be.  Remember that the more aggressive the blocking level, the more potential there is for false-positives that the WAF might detect. Select Custom to specify your own security policy below."
       },
       "defaultValue": "Medium",
       "allowedValues": [
         "Low",
         "Medium",
-        "High"
+        "High",
+        "Custom"
       ]
+    },
+    "customPolicy": {
+      "type": "string",
+      "metadata": {
+        "description": "Specify the publicly available URL of a custom ASM security policy in XML format. This policy will be applied in place of the standard High/Medium/Low policy as indicated above."
+      },
+      "defaultValue": ""
     },
     "applicationFQDN": {
       "type": "string",
@@ -190,7 +198,7 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "singleQuote": "'",
-    "commandArgs": "[concat(parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'), ' ', parameters('applicationServiceSecurePort'), ' ', toLower(parameters('applicationType')), ' ', toLower(parameters('blockingLevel')), ' ', parameters('applicationProtocols'), ' ', parameters('adminUsername'), ' ', parameters('adminPassword'))]"
+    "commandArgs": "[concat(parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'), ' ', parameters('applicationServiceSecurePort'), ' ', toLower(parameters('applicationType')), ' ', toLower(parameters('blockingLevel')), ' ', parameters('applicationProtocols'), ' ', parameters('adminUsername'), ' ', parameters('adminPassword'), ' ', parameters('customPolicy'))]"
   },
   "resources": [
     {
