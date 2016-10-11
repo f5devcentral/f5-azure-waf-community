@@ -144,6 +144,7 @@
     },
     "customPolicy": {
       "type": "string",
+      "defaultValue": "NOT_SPECIFIED",
       "metadata": {
         "description": "Specify the publicly available URL of a custom ASM security policy in XML format. This policy will be applied in place of the standard High/Medium/Low policy as indicated above."
       },
