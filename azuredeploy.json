@@ -579,7 +579,7 @@
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('wafNamePrefix'),0,'/start')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2016-03-30",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),0)]"
@@ -587,7 +587,7 @@
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
         "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.2",
+        "typeHandlerVersion": "1.5",
         "settings": {
           "fileUris": [
             "https://f5cloudlibs.blob.core.windows.net/archive/runScripts.js"
@@ -603,7 +603,7 @@
         "count": "[sub(parameters('numberOfWAFs'), 1)]"
       },
       "name": "[concat(variables('wafNamePrefix'),add(copyindex(),1),'/start')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2016-03-30",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1))]"
@@ -611,7 +611,7 @@
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
         "type": "CustomScriptForLinux",
-        "typeHandlerVersion": "1.2",
+        "typeHandlerVersion": "1.5",
         "settings": {
           "fileUris": [
             "https://f5cloudlibs.blob.core.windows.net/archive/runScripts.js"
