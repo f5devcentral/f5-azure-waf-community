@@ -78,10 +78,10 @@
     },
     "licenseToken2": {
       "type": "string",
+      "defaultValue": "".
       "metadata": {
         "description": "The license token for the second F5 Web Application Firewall. This field is required when deploying two or more WAFs."
-      },
-      "defaultValue": ""
+      }     
     },
     "applicationName": {
       "type": "string",
@@ -109,7 +109,7 @@
       "defaultValue": "80",
       "metadata": {
         "description": "If deploying an HTTP application, the port on which your service listens for unencrypted traffic. This field is not required when deploying https only."
-      },
+      }
     },
     "applicationServiceSecurePort": {
       "type": "string",
@@ -120,10 +120,10 @@
     },
     "applicationType": {
       "type": "string",
+      "defaultValue": "Linux",
       "metadata": {
         "description": "Is your application running on a Linux OS or a Windows OS?"
-      },
-      "defaultValue": "Linux",
+      },     
       "allowedValues": [
         "Linux",
         "Windows"
@@ -131,10 +131,10 @@
     },
     "blockingLevel": {
       "type": "string",
+      "defaultValue": "Medium",
       "metadata": {
         "description": "Please select how aggressive you would like the blocking level of this WAF to be.  Remember that the more aggressive the blocking level, the more potential there is for false-positives that the WAF might detect. Select Custom to specify your own security policy below."
-      },
-      "defaultValue": "Medium",
+      },    
       "allowedValues": [
         "Low",
         "Medium",
@@ -147,8 +147,7 @@
       "defaultValue": "NOT_SPECIFIED",
       "metadata": {
         "description": "Specify the publicly available URL of a custom ASM security policy in XML format. This policy will be applied in place of the standard High/Medium/Low policy as indicated above."
-      },
-      "defaultValue": ""
+      }
     },
     "applicationFQDN": {
       "type": "string",
@@ -159,24 +158,24 @@
     },
     "vaultName": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "The Azure Key vault where SSL certificates are stored. This field is not required when deploying http only."
-      },
-      "defaultValue": ""
+      }     
     },
     "vaultResourceGroup": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "Resource Group of the key vault. This field is not required when deploying http only."
-      },
-      "defaultValue": ""
+      }     
     },
     "httpssecretUrlWithVersion": {
       "type": "string",
+      "defaultValue": "",
       "metadata": {
         "description": "full Key Vault Id to the secret that stores the SSL cert. This field is not required when deploying http only."
-      },
-      "defaultValue": ""
+      }    
     }
   },
   "variables": {
