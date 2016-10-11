@@ -78,7 +78,7 @@
     },
     "licenseToken2": {
       "type": "string",
-      "defaultValue": "".
+      "defaultValue": "",
       "metadata": {
         "description": "The license token for the second F5 Web Application Firewall. This field is required when deploying two or more WAFs."
       }     
