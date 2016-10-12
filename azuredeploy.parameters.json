@@ -44,6 +44,9 @@
           "blockingLevel": {
                "value": "Medium"
           },
+          "customPolicy": {
+               "value": "GEN-UNIQUE",
+          },
           "applicationFQDN": {
                "value": "www.contoso.com"
           },
@@ -54,6 +57,9 @@
                "value": "GEN-UNIQUE"
           },
           "httpssecretUrlWithVersion": {
+               "value": "GEN-UNIQUE"
+          },
+          "certThumbprint": {
                "value": "GEN-UNIQUE"
           }
      }
