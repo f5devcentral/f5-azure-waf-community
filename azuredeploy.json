@@ -585,7 +585,7 @@
         "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),0)]"
       ],
       "properties": {
-        "publisher": "Microsoft.OSTCExtensions",
+        "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
         "typeHandlerVersion": "2.0",
         "settings": {
@@ -611,7 +611,7 @@
         "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1))]"
       ],
       "properties": {
-        "publisher": "Microsoft.OSTCExtensions",
+        "publisher": "Microsoft.Azure.Extensions",
         "type": "CustomScript",
         "typeHandlerVersion": "2.0",
         "settings": {
