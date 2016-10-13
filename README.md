@@ -1,12 +1,30 @@
 ### Azure Web Application Firewall Community Template ###
 ### Deploy F5 WAF Solution in Azure ###
 
+### All Up ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
 <a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/edwoodjrjr/f5-azure-waf-community/develop/azuredeploy.json" target="_blank">
   <img src="http://armviz.io/visualizebutton.png"/>
+</a>
+
+### HTTP ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fhttp%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+### HTTPS ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fhttps%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+### HTTP/HTTPS ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fhttp-https%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+### SSL OFFLOAD ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Foffload%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
 ### Description ###
