@@ -1,31 +1,4 @@
 ### Azure Web Application Firewall Community Template ###
-### Deploy F5 WAF Solution in Azure ###
-
-### All Up ###
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Fazuredeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-<a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/edwoodjrjr/f5-azure-waf-community/develop/azuredeploy.json" target="_blank">
-  <img src="http://armviz.io/visualizebutton.png"/>
-</a>
-
-### HTTP ###
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fhttp%2Fazuredeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-### HTTPS ###
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fhttps%2Fazuredeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-### HTTP/HTTPS ###
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fhttp-https%2Fazuredeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-### SSL OFFLOAD ###
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Foffload%2Fazuredeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
 
 ### Description ###
 You can secure your web applications by creating a web application firewall (WAF) that uses the Local Traffic Manager™ (LTM®) and Application Security Manager™ (ASM™) modules. In Azure Security Center, the BIG-IP® VE instances are configured as a WAF for you, complete with traffic monitoring in Azure. The F5 WAF solution has more than 2600 signatures at its disposal to identify and block unwanted traffic.
@@ -117,3 +90,50 @@ From the BIG-IP Management UI, you can view and accept/ignore detected security 
 * From the Requests List, select the illegal request you want to view
 * Select an action to be performed for future occurences of this violation
 * From the top menu, click Apply Policy to apply the changes
+
+### All Up ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+<a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/edwoodjrjr/f5-azure-waf-community/develop/azuredeploy.json" target="_blank">
+  <img src="http://armviz.io/visualizebutton.png"/>
+</a>
+
+### Deploy F5 WAF Solution in Azure ###
+
+### Single WAF ###
+### HTTP ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Fhttp%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+### HTTPS ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Fhttps%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+### HTTP/HTTPS ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Fhttp-https%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+### SSL OFFLOAD ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Foffload%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+### Clustered WAF ###
+### HTTP ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fcluster-WAF%2Fhttp%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+### HTTPS ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fcluster-WAF%2Fhttps%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+### HTTP/HTTPS ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fcluster-WAF%2Fhttp-https%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+### SSL OFFLOAD ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fcluster-WAF%2Foffload%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
