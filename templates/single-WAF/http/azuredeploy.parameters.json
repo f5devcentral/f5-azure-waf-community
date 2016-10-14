@@ -1,0 +1,66 @@
+{
+     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+     "contentVersion": "1.0.0.0",
+     "parameters": {
+          "location": {
+               "value": "West US"
+          },
+          "numberOFWAFs": {
+               "value": "2"
+          },
+          "vmSize": {
+               "value": "Standard_A4"
+          },
+          "adminUsername": {
+               "value": "azureuser"
+          },
+          "dnsNameForPublicIP": {
+               "value": "GEN-UNIQUE"
+          },
+          "licenseToken1": {
+               "value": "GEN-UNIQUE"
+          },
+          "licenseToken2": {
+               "value": "GEN-UNIQUE"
+          },
+          "applicationName": {
+               "value": "myAppName"
+          },
+          "applicationProtocols": {
+               "value": "http"
+          },
+          "applicationAddress": {
+               "value": "GEN-UNIQUE"
+          },
+          "applicationServicePort": {
+               "value": "80"
+          },
+          "applicationServiceSecurePort": {
+               "value": "443"
+          },
+          "applicationType": {
+               "value": "Linux"
+          },
+          "blockingLevel": {
+               "value": "Medium"
+          },
+          "customPolicy": {
+               "value": "GEN-UNIQUE",
+          },
+          "applicationFQDN": {
+               "value": "www.contoso.com"
+          },
+          "vaultName": {
+               "value": "GEN-UNIQUE"
+          },
+          "vaultResourceGroup": {
+               "value": "GEN-UNIQUE"
+          },
+          "httpssecretUrlWithVersion": {
+               "value": "GEN-UNIQUE"
+          },
+          "certThumbprint": {
+               "value": "GEN-UNIQUE"
+          }
+     }
+}

@@ -1,13 +1,4 @@
 ### Azure Web Application Firewall Community Template ###
-### Deploy F5 WAF Solution in Azure ###
-
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Fazuredeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-
-<a href="http://armviz.io/#/?load=https://raw.githubusercontent.com/f5devcentral/f5-azure-waf-community/master/azuredeploy.json" target="_blank">
-  <img src="http://armviz.io/visualizebutton.png"/>
-</a>
 
 ### Description ###
 You can secure your web applications by creating a web application firewall (WAF) that uses the Local Traffic Manager™ (LTM®) and Application Security Manager™ (ASM™) modules. In Azure Security Center, the BIG-IP® VE instances are configured as a WAF for you, complete with traffic monitoring in Azure. The F5 WAF solution has more than 2600 signatures at its disposal to identify and block unwanted traffic.
@@ -43,6 +34,7 @@ Attack signatures are rules that identify attacks on a web application and its c
 | Low | The fewest attack signatures enabled. There is a greater chance of possible security violations making it through to the web applications, but a lesser chance of false positives. |
 | Medium | A balance between logging too many violations and too many false positives. |
 | High | The most attack signatures enabled. A large number of false positives may be recorded; you must correct these alerts for your application to function correctly. |
+| Custom | Select this option to use your own custom ASM security policy (see below). |
 
 All traffic that is not being blocked is being used by the WAF for learning. Over time, if the WAF determines that traffic is safe, it allows it through to the application. Alternately, the WAF can determine that traffic is unsafe and block it from the application.
 
@@ -59,17 +51,20 @@ You cannot change the security blocking level after you create the WAF, so be su
 | adminPassword | x | A strong password for the WAFs. Remember this password; you will need it later. |
 | dnsNameForPublicIP | x | Unique DNS Name for the public IP address used to access the WAFs for management. |
 | licenseToken1 | x | The license token from the F5 licensing server. This license will be used for the first F5 WAF. |
-| licenseToken2 | x | The license token from the F5 licensing server. This license will be used for the second F5 WAF. |
+| licenseToken2 | x | The license token from the F5 licensing server. This license will be used for the second F5 WAF. This field is required in the cluster-WAF deployment scenarios. |
 | applicationName | x | A simple name for your application. |
-| applicationProtocols | x | A semi-colon separated list of protocols (http;https) that will be used to configure the application virtual servers (for example, http for port 80 and/or https for SSL). The only allowed value for this template is "http;https". |
+| applicationProtocols | x | The protocol that will be used to configure the application virtual servers. The only allowed values for these templates are http, https, or https-offload. |
 | applicationAddress | x | The public IP address or DNS FQDN of the application that this WAF will protect. |
-| applicationPorts | x | A semi-colon separated list of ports that your application is listening on (for example, 80 and 443). The only allowed value for this template is "80;443". |
+| applicationServicePort | x | The unencrypted port that your application is listening on (for example, 80). This field is required in the http and https-offload deployment scenarios. |
+| applicationServiceSecurePort | x | The encrypted port that your application is listening on (for example, 443). This field is required in the https deployment scenario. |
 | applicationType | x | The operating system on which your application is running. (Linux OS or Windows OS). |
 | blockingLevel | x | The level of traffic you want to flag as insecure. All applications behind the WAF will use this level. The higher the level, the more traffic that is blocked. The lower the level, the more chances that unsecure traffic will make it through to your application. See the Security blocking levels topic for more information. |
+| customPolicy |  | The URL of a custom ASM security policy, in XML format, that you would like to apply to the deployment. |
 | applicationFQDN | x | The fully-qualified domain name of your application (for example, www.example.com). |
-| applicationCertificate | x | The public URL of the SSL certificate file. This is only required when you are deploying WAF in front of an HTTPS application.  For demonstration purposes only - Do NOT use a production certificate. |
-| applicationKey | x | The public URL of the SSL key file.  This is only required when you are deploying WAF in front of an HTTPS application.  For demonstration purposes only - Do NOT use a production key. |
-| applicationChain |  | The public URL of the SSL chain file. |
+| vaultName | x | The name of the Azure Key Vault where you have stored your SSL cert and key in .pfx format as a secret. This field is required in the https and https-offload deployment scenarios. |
+| vaultResourceGroup | x | The name of the Azure Resource Group where the previously entered Key Vault is located. This field is required in the https and https-offload deployment scenarios. |
+| httpssecretUrlWithVersion | x | The public URL of the Azure Key Vault secret where your SSL cert and key are stored in .pfx format. This field is required in the https and https-offload deployment scenarios. |
+| certThumbprint | x | The thumbprint of the SSL cert stored in Azure Key Vault. This field is required in the https and https-offload deployment scenarios. |
 
 ### Results ###
 
@@ -99,3 +94,43 @@ From the BIG-IP Management UI, you can view and accept/ignore detected security 
 * From the Requests List, select the illegal request you want to view
 * Select an action to be performed for future occurences of this violation
 * From the top menu, click Apply Policy to apply the changes
+
+
+### Deploy F5 WAF Solution in Azure ###
+
+### Single WAF ###
+### HTTP ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Fhttp%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+### HTTPS ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Fhttps%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+### SSL OFFLOAD ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Foffload%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+### Clustered WAF ###
+### HTTP ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fcluster-WAF%2Fhttp%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+### HTTPS ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fcluster-WAF%2Fhttps%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+### SSL OFFLOAD ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fcluster-WAF%2Foffload%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+
+### HTTP and HTTPS ###
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Fazuredeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
