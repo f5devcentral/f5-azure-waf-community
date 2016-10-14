@@ -111,10 +111,6 @@ From the BIG-IP Management UI, you can view and accept/ignore detected security 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Fhttps%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-### HTTP/HTTPS ###
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Fhttp-https%2Fazuredeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
 ### SSL OFFLOAD ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fsingle-WAF%2Foffload%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -127,10 +123,6 @@ From the BIG-IP Management UI, you can view and accept/ignore detected security 
 </a>
 ### HTTPS ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fcluster-WAF%2Fhttps%2Fazuredeploy.json" target="_blank">
-    <img src="http://azuredeploy.net/deploybutton.png"/>
-</a>
-### HTTP/HTTPS ###
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fedwoodjrjr%2Ff5-azure-waf-community%2Fdevelop%2Ftemplates%2Fcluster-WAF%2Fhttp-https%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 ### SSL OFFLOAD ###
