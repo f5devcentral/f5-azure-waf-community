@@ -27,7 +27,7 @@
     "numberOFWAFs": {
       "type": "int",
       "defaultValue": 1,
-      "allowedValues": [ 1, 2 ],
+      "allowedValues": [ 1 ],
       "metadata": {
         "description": "The number of Web Application Firewalls that will be deployed in front of your application."
       }
@@ -77,13 +77,6 @@
         "description": "The license token for the first F5 Web Application Firewall."
       }
     },
-    "licenseToken2": {
-      "type": "string",
-      "defaultValue": "REQUIRED_FOR_2_OR_MORE_WAFS",
-      "metadata": {
-        "description": "The license token for the second F5 Web Application Firewall. This field is required when deploying two or more WAFs."
-      }     
-    },
     "applicationName": {
       "type": "string",
       "defaultValue": "myAppName",
@@ -93,16 +86,16 @@
     },
     "applicationProtocols": {
       "type": "string",
-      "defaultValue": "http",
-      "allowedValues": [ "http", "https", "http-https", "https-offload" ],
+      "defaultValue": "https-offload",
+      "allowedValues": [ "https-offload" ],
       "metadata": {
-        "description": "The protocol(s) that will be used to configure the WAF's VIP's, (e.g. http for port 80, https for SSL, or http-https for both.)."
+        "description": "The protocol(s) that will be used to configure the WAF VIPs."
       }
     },
     "applicationAddress": {
       "type": "string",
       "metadata": {
-        "description": "The public IP address or DNS FQDN of the application that this WAF is for."
+        "description": "The public IP address or DNS FQDN of the application that this WAF will protect."
       }
     },
     "applicationServicePort": {
@@ -334,20 +327,6 @@
             }
           },
           {
-            "name": "app_rule_880",
-            "properties": {
-              "description": "",
-              "priority": 103,
-              "sourceAddressPrefix": "*",
-              "sourcePortRange": "*",
-              "destinationAddressPrefix": "*",
-              "destinationPortRange": "880",
-              "protocol": "TCP",
-              "direction": "Inbound",
-              "access": "Allow"
-            }
-          },
-          {
             "name": "app_rule_8445",
             "properties": {
               "description": "",
@@ -389,24 +368,6 @@
         ],
         "loadBalancingRules": [
           {
-            "Name": "lbrule880",
-            "properties": {
-              "frontendIPConfiguration": {
-                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
-              },
-              "backendAddressPool": {
-                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
-              },
-              "probe": {
-                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/lbprobe880')]"
-              },
-              "protocol": "Tcp",
-              "frontendPort": 80,
-              "backendPort": 880,
-              "idleTimeoutInMinutes": 15
-            }
-          },
-          {
             "Name": "lbrule8445",
             "properties": {
               "frontendIPConfiguration": {
@@ -426,15 +387,6 @@
           }
         ],
         "probes": [
-          {
-            "properties": {
-              "protocol": "Tcp",
-              "port": 880,
-              "intervalInSeconds": 15,
-              "numberOfProbes": 2
-            },
-            "name": "lbprobe880"
-          },
           {
             "properties": {
               "protocol": "Tcp",
@@ -600,34 +552,10 @@
           "fileUris": [
             "https://f5cloudlibs.blob.core.windows.net/archive/runScripts.js"
           ],
-          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseToken1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/cluster.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 4), ' --create-group --device-group Sync --sync-type sync-failover --device ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --auto-sync --save-on-auto-sync --asm-sync', '\"')]"
+          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseToken1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --signal ONBOARD_DONE \" --script \" --wait-for CLUSTER_DONE --output /var/log/runScript.log --log-level debug --url http://cdn-prod-ore-f5.s3-website-us-west-2.amazonaws.com/product/blackbox/staging/azure/deploy_waf.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), '\"')]"
         }
       }
-     },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "copy": {
-        "name": "extensionLoop",
-        "count": "[sub(parameters('numberOfWAFs'), 1)]"
-      },
-      "name": "[concat(variables('wafNamePrefix'),add(copyindex(),1),'/start')]",
-      "apiVersion": "2016-03-30",
-      "location": "[parameters('location')]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "settings": {
-          "fileUris": [
-            "https://f5cloudlibs.blob.core.windows.net/archive/runScripts.js"
-          ],
-          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), copyindex(1), '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseToken2'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/cluster.log --log-level debug --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 5), ' --join-group --device-group Sync --sync --remote-host ', concat(variables('ipAddress'), 4), ' --remote-user admin --remote-password ', parameters('adminPassword'), ' --signal CLUSTER_DONE \" --script \" --wait-for CLUSTER_DONE --output /var/log/runScript.log --log-level debug --url http://cdn-prod-ore-f5.s3-website-us-west-2.amazonaws.com/product/blackbox/staging/azure/deploy_iapp.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), '\"')]"
-        }
-      }
-    }
+     }
   ],
   "outputs": {
     "GUI-URL": {
