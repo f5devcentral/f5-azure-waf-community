@@ -105,13 +105,6 @@
         "description": "If deploying an HTTP application, the port on which your service listens for unencrypted traffic. This field is not required when deploying https only."
       }
     },
-    "applicationServiceSecurePort": {
-      "type": "string",
-      "defaultValue": "443",
-      "metadata": {
-        "description": "If deploying an HTTPS application, the port on which your service listens for encrypted traffic. This field is not required when deploying http only."
-      }
-    },
     "applicationType": {
       "type": "string",
       "defaultValue": "Linux",
@@ -199,7 +192,7 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "singleQuote": "'",
-    "commandArgs": "[concat(parameters('applicationProtocols'), ' ', parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'), ' ', parameters('applicationServiceSecurePort'), ' ', toLower(parameters('applicationType')), ' ', toLower(parameters('blockingLevel')), ' ', parameters('customPolicy'), ' ', parameters('certThumbprint'), ' ', parameters('adminUsername'), ' ', parameters('adminPassword'))]"
+    "commandArgs": "[concat(parameters('applicationProtocols'), ' ', parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'),  ' ', toLower(parameters('applicationType')), ' ', toLower(parameters('blockingLevel')), ' ', parameters('customPolicy'), ' ', parameters('certThumbprint'), ' ', parameters('adminUsername'), ' ', parameters('adminPassword'))]"
   },
   "resources": [
     {
