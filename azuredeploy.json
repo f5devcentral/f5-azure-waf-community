@@ -206,7 +206,7 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "singleQuote": "'",
-    "commandArgs": "[concat(parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'), ' ', parameters('applicationServiceSecurePort'), ' ', toLower(parameters('applicationType')), ' ', toLower(parameters('blockingLevel')), ' ', parameters('applicationProtocols'), ' ', parameters('adminUsername'), ' ', parameters('adminPassword'), ' ', parameters('customPolicy'), ' ', parameters('certThumbprint'))]"
+  "commandArgs": "[concat(parameters('applicationProtocols'), ' ', parameters('applicationFQDN'), ' ', parameters('applicationAddress'), ' ', parameters('applicationServicePort'), ' ', parameters('applicationServiceSecurePort'), ' ', toLower(parameters('applicationType')), ' ', toLower(parameters('blockingLevel')), ' ', parameters('customPolicy'), ' ', parameters('certThumbprint'), ' ', parameters('adminUsername'), ' ', parameters('adminPassword'))]"
   },
   "resources": [
     {
