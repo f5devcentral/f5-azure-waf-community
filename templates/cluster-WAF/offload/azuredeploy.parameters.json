@@ -45,7 +45,7 @@
                "value": "Medium"
           },
           "customPolicy": {
-               "value": "GEN-UNIQUE",
+               "value": "NOT_SPECIFIED",
           },
           "applicationFQDN": {
                "value": "www.contoso.com"

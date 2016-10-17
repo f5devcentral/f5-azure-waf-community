@@ -27,13 +27,10 @@
                "value": "myAppName"
           },
           "applicationProtocols": {
-               "value": "http"
+               "value": "https"
           },
           "applicationAddress": {
                "value": "GEN-UNIQUE"
-          },
-          "applicationServicePort": {
-               "value": "80"
           },
           "applicationServiceSecurePort": {
                "value": "443"
@@ -45,7 +42,7 @@
                "value": "Medium"
           },
           "customPolicy": {
-               "value": "GEN-UNIQUE",
+               "value": "NOT_SPECIFIED",
           },
           "applicationFQDN": {
                "value": "www.contoso.com"

@@ -6,7 +6,7 @@
                "value": "West US"
           },
           "numberOFWAFs": {
-               "value": "2"
+               "value": "1"
           },
           "vmSize": {
                "value": "Standard_A4"
@@ -45,7 +45,7 @@
                "value": "Medium"
           },
           "customPolicy": {
-               "value": "GEN-UNIQUE",
+               "value": "NOT_SPECIFIED",
           },
           "applicationFQDN": {
                "value": "www.contoso.com"

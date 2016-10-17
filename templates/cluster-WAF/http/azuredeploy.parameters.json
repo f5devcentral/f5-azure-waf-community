@@ -35,9 +35,6 @@
           "applicationServicePort": {
                "value": "80"
           },
-          "applicationServiceSecurePort": {
-               "value": "443"
-          },
           "applicationType": {
                "value": "Linux"
           },
@@ -45,22 +42,10 @@
                "value": "Medium"
           },
           "customPolicy": {
-               "value": "GEN-UNIQUE",
+               "value": "NOT_SPECIFIED",
           },
           "applicationFQDN": {
                "value": "www.contoso.com"
-          },
-          "vaultName": {
-               "value": "GEN-UNIQUE"
-          },
-          "vaultResourceGroup": {
-               "value": "GEN-UNIQUE"
-          },
-          "httpssecretUrlWithVersion": {
-               "value": "GEN-UNIQUE"
-          },
-          "certThumbprint": {
-               "value": "GEN-UNIQUE"
           }
      }
 }
