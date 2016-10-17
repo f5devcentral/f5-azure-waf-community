@@ -6,7 +6,7 @@
                "value": "West US"
           },
           "numberOFWAFs": {
-               "value": "2"
+               "value": "1"
           },
           "vmSize": {
                "value": "Standard_A4"
@@ -18,9 +18,6 @@
                "value": "GEN-UNIQUE"
           },
           "licenseToken1": {
-               "value": "GEN-UNIQUE"
-          },
-          "licenseToken2": {
                "value": "GEN-UNIQUE"
           },
           "applicationName": {
@@ -35,9 +32,6 @@
           "applicationServicePort": {
                "value": "80"
           },
-          "applicationServiceSecurePort": {
-               "value": "443"
-          },
           "applicationType": {
                "value": "Linux"
           },
@@ -45,22 +39,10 @@
                "value": "Medium"
           },
           "customPolicy": {
-               "value": "GEN-UNIQUE",
+               "value": "NOT_SPECIFIED",
           },
           "applicationFQDN": {
                "value": "www.contoso.com"
-          },
-          "vaultName": {
-               "value": "GEN-UNIQUE"
-          },
-          "vaultResourceGroup": {
-               "value": "GEN-UNIQUE"
-          },
-          "httpssecretUrlWithVersion": {
-               "value": "GEN-UNIQUE"
-          },
-          "certThumbprint": {
-               "value": "GEN-UNIQUE"
           }
      }
 }

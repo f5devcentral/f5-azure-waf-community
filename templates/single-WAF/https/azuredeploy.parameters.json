@@ -6,7 +6,7 @@
                "value": "West US"
           },
           "numberOFWAFs": {
-               "value": "2"
+               "value": "1"
           },
           "vmSize": {
                "value": "Standard_A4"
@@ -20,20 +20,14 @@
           "licenseToken1": {
                "value": "GEN-UNIQUE"
           },
-          "licenseToken2": {
-               "value": "GEN-UNIQUE"
-          },
           "applicationName": {
                "value": "myAppName"
           },
           "applicationProtocols": {
-               "value": "http"
+               "value": "https"
           },
           "applicationAddress": {
                "value": "GEN-UNIQUE"
-          },
-          "applicationServicePort": {
-               "value": "80"
           },
           "applicationServiceSecurePort": {
                "value": "443"
@@ -45,7 +39,7 @@
                "value": "Medium"
           },
           "customPolicy": {
-               "value": "GEN-UNIQUE",
+               "value": "NOT_SPECIFIED",
           },
           "applicationFQDN": {
                "value": "www.contoso.com"
