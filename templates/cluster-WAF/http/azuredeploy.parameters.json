@@ -6,15 +6,7 @@
                "value": "West US"
           },
           "numberOFWAFs": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-               "value": "1"
-=======
                "value": "2"
->>>>>>> 37c96a78b712debe1423e93e666a1911edec9cd2
-=======
-               "value": "1"
->>>>>>> develop
           },
           "vmSize": {
                "value": "Standard_A4"
