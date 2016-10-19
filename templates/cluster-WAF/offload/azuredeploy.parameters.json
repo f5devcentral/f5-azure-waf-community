@@ -27,7 +27,7 @@
                "value": "myAppName"
           },
           "applicationProtocols": {
-               "value": "http"
+               "value": "https-offload"
           },
           "applicationAddress": {
                "value": "GEN-UNIQUE"
