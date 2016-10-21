@@ -2,28 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "location": {
-      "type": "string",
-      "defaultValue": "West US",
-      "allowedValues": [
-        "Brazil South",
-        "Central US",
-        "East Asia",
-        "East US",
-        "East US 2",
-        "Japan East",
-        "Japan West",
-        "North Central US",
-        "North Europe",
-        "South Central US",
-        "Southeast Asia",
-        "West Europe",
-        "West US"
-      ],
-      "metadata": {
-        "description": "The location where you want to install these Web Application Firewalls."
-      }
-    },
     "numberOFWAFs": {
       "type": "int",
       "defaultValue": 2,
@@ -187,6 +165,7 @@
     }
   },
   "variables": {
+    "location": "[resourceGroup().location]",
     "virtualNetworkName": "[concat(parameters('dnsNameForPublicIP'),'-vnet')]",
     "vnetAddressPrefix": "10.10.0.0/16",
     "subnetName": "[concat(parameters('dnsNameForPublicIP'),'-subNet')]",
@@ -213,7 +192,7 @@
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[parameters('dnsNameForPublicIP')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "displayName": "PublicIPAddress"
       },
@@ -228,7 +207,7 @@
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworkName')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "displayName": "VirtualNetwork"
       },
@@ -252,7 +231,7 @@
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[concat(variables('nicNamePrefix'),copyindex())]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "displayName": "NetworkInterface"
       },
@@ -302,7 +281,7 @@
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[concat(parameters('dnsNameForPublicIP'), '-nsg')]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "properties": {
         "securityRules": [
           {
@@ -355,7 +334,7 @@
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('dnsNameForPublicIP'))]"
       ],
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "name": "[variables('loadBalancerName')]",
       "properties": {
         "frontendIPConfigurations": [
@@ -411,7 +390,7 @@
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/loadBalancers/inboundNatRules",
       "name": "[concat(variables('loadBalancerName'),'/guimgt', copyIndex())]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "copy": {
         "name": "lbNatLoop",
         "count": "[parameters('numberOFWAFs')]"
@@ -433,7 +412,7 @@
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/loadBalancers/inboundNatRules",
       "name": "[concat(variables('loadBalancerName'),'/sshmgt', copyIndex())]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "copy": {
         "name": "lbNatLoop",
         "count": "[parameters('numberOFWAFs')]"
@@ -453,7 +432,7 @@
     },
     {
       "apiVersion": "2015-06-15",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "name": "[variables('availabilitySetName')]",
       "type": "Microsoft.Compute/availabilitySets"
     },
@@ -461,7 +440,7 @@
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(variables('wafNamePrefix'),copyindex())]",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "tags": {
         "displayName": "WAFs"
       },
@@ -537,7 +516,7 @@
     {
       "name": "[variables('newStorageAccountName')]",
       "type": "Microsoft.Storage/storageAccounts",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "apiVersion": "2015-06-15",
       "properties": {
         "accountType": "Standard_LRS"
@@ -547,7 +526,7 @@
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(variables('wafNamePrefix'),0,'/start')]",
       "apiVersion": "2016-03-30",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),0)]"
       ],
@@ -573,7 +552,7 @@
       },
       "name": "[concat(variables('wafNamePrefix'),add(copyindex(),1),'/start')]",
       "apiVersion": "2016-03-30",
-      "location": "[parameters('location')]",
+      "location": "[variables('location')]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1))]"
       ],
