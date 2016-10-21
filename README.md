@@ -44,7 +44,7 @@ You cannot change the security blocking level after you create the WAF, so be su
 
 | Parameter | Required | Description |
 | --- | --- | --- |
-| numberOFWAFs | x | The number of WAFs that will be deployed in front of your application.  The only allowed value for this template is 2. |
+| numberOFWAFs | x | The number of WAFs that will be deployed in front of your application.  This value is hard coded at 1 or 2, depending on the template you selected. |
 | vmSize | x | The desired Azure Virtual Machine instance size. |
 | adminUsername | x | A user name to login to the WAFs.  The default value is "azureuser". |
 | adminPassword | x | A strong password for the WAFs. Remember this password; you will need it later. |
@@ -97,39 +97,39 @@ From the BIG-IP Management UI, you can view and accept/ignore detected security 
 
 ### Deploy F5 WAF Solution in Azure ###
 
-### Single WAF ###
-### HTTP ###
+### Single WAF - Deploys one BIG-IP VE ###
+### HTTP - Deploys an unencrypted application service ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Ftemplates%2Fsingle-WAF%2Fhttp%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### HTTPS ###
+### HTTPS - Deploys an encrypted application service ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Ftemplates%2Fsingle-WAF%2Fhttps%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### SSL OFFLOAD ###
+### SSL OFFLOAD - Deploys an encrypted application service with SSL offloading ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Ftemplates%2Fsingle-WAF%2Foffload%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### Clustered WAF ###
-### HTTP ###
+### Clustered WAF - Deploys two BIG-IP VEs with synchronized configuration ###
+### HTTP - Deploys an unencrypted application service ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Ftemplates%2Fcluster-WAF%2Fhttp%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### HTTPS ###
+### HTTPS - Deploys an encrypted application service ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Ftemplates%2Fcluster-WAF%2Fhttps%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### SSL OFFLOAD ###
+### SSL OFFLOAD - Deploys an encrypted application service with SSL offloading ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Ftemplates%2Fcluster-WAF%2Foffload%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-### HTTP and HTTPS ###
+### HTTP and HTTPS - Deploys both unencrypted and encrypted application services ###
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ff5devcentral%2Ff5-azure-waf-community%2Fmaster%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
