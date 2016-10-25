@@ -71,7 +71,6 @@ New-AzureRmResourceGroup -Name $deploymentName -Location "$region"
 
 # Create Arm Deployment
 $pwd = ConvertTo-SecureString -String $adminPassword -AsPlainText -Force
-
 $deployment = New-AzureRmResourceGroupDeployment -Name $dnsLabel -ResourceGroupName $dnsLabel -TemplateFile $templateFilePath -TemplateParameterFile $parametersFilePath -instanceType $instanceType -adminPassword $pwd -dnsLabel $dnsLabel -licenseKey1 "$licenseKey1" -licenseKey2 "$licenseKey2" -applicationAddress $applicationAddress -applicationType $applicationType -blockingLevel $blockingLevel -customPolicy $customPolicy -restrictedSrcAddress $restrictedSrcAddress
 
 # Print Output of Deployment to Console

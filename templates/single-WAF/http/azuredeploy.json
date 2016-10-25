@@ -49,7 +49,7 @@
       }
     },
     "dnsLabel": {
-         "type": "string",
+      "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Web Application Firewalls for management."
       }
