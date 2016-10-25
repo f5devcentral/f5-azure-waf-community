@@ -148,7 +148,7 @@
         "description": "Restricts SSH access to a specific network or address. Enter a IP address or address range in CIDR notation, or asterisk for all sources."
       }
     },
-    "tagvalues": {
+    "tagValues": {
       "type": "object",
       "defaultValue": {
         "application": "WAF",
@@ -190,11 +190,11 @@
       "location": "[variables('location')]",
       "tags": {
         "displayName": "PublicIPAddress",
-        "application": "[parameters('tagvalues').application]",
-        "environment": "[parameters('tagvalues').environment]",
-        "group": "[parameters('tagvalues').group]",
-        "owner": "[parameters('tagvalues').owner]",
-        "costCenter": "[parameters('tagvalues').cost]"
+        "application": "[parameters('tagValues').application]",
+        "environment": "[parameters('tagValues').environment]",
+        "group": "[parameters('tagValues').group]",
+        "owner": "[parameters('tagValues').owner]",
+        "costCenter": "[parameters('tagValues').cost]"
       },
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
@@ -210,11 +210,11 @@
       "location": "[variables('location')]",
       "tags": {
         "displayName": "VirtualNetwork",
-        "application": "[parameters('tagvalues').application]",
-        "environment": "[parameters('tagvalues').environment]",
-        "group": "[parameters('tagvalues').group]",
-        "owner": "[parameters('tagvalues').owner]",
-        "costCenter": "[parameters('tagvalues').cost]"
+        "application": "[parameters('tagValues').application]",
+        "environment": "[parameters('tagValues').environment]",
+        "group": "[parameters('tagValues').group]",
+        "owner": "[parameters('tagValues').owner]",
+        "costCenter": "[parameters('tagValues').cost]"
       },
       "properties": {
         "addressSpace": {
@@ -239,11 +239,11 @@
       "location": "[variables('location')]",
       "tags": {
         "displayName": "NetworkInterface",
-        "application": "[parameters('tagvalues').application]",
-        "environment": "[parameters('tagvalues').environment]",
-        "group": "[parameters('tagvalues').group]",
-        "owner": "[parameters('tagvalues').owner]",
-        "costCenter": "[parameters('tagvalues').cost]"
+        "application": "[parameters('tagValues').application]",
+        "environment": "[parameters('tagValues').environment]",
+        "group": "[parameters('tagValues').group]",
+        "owner": "[parameters('tagValues').owner]",
+        "costCenter": "[parameters('tagValues').cost]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
@@ -453,11 +453,11 @@
       "location": "[variables('location')]",
       "tags": {
         "displayName": "WAFs",
-        "application": "[parameters('tagvalues').application]",
-        "environment": "[parameters('tagvalues').environment]",
-        "group": "[parameters('tagvalues').group]",
-        "owner": "[parameters('tagvalues').owner]",
-        "costCenter": "[parameters('tagvalues').cost]"
+        "application": "[parameters('tagValues').application]",
+        "environment": "[parameters('tagValues').environment]",
+        "group": "[parameters('tagValues').group]",
+        "owner": "[parameters('tagValues').owner]",
+        "costCenter": "[parameters('tagValues').cost]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicNamePrefix'), copyindex())]",

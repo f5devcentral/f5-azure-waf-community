@@ -53,7 +53,7 @@
           "restrictedSrcAddress": {
                "value": "*"
          },
-         "tagvalues": {
+         "tagValues": {
                "value": {
                     "application": "WAF",
                     "environment": "ENV",
