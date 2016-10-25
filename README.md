@@ -44,26 +44,27 @@ You cannot change the security blocking level after you create the WAF, so be su
 
 | Parameter | Required | Description |
 | --- | --- | --- |
-| numberOFWAFs | x | The number of WAFs that will be deployed in front of your application.  This value is hard coded at 1 or 2, depending on the template you selected. |
-| vmSize | x | The desired Azure Virtual Machine instance size. |
+| deploymentName | x | A simple name for your application. |
+| numberOfIntances | x | The number of WAFs that will be deployed in front of your application.  This value is hard coded at 1 or 2, depending on the template you selected. |
+| instanceType | x | The desired Azure Virtual Machine instance size. |
 | adminUsername | x | A user name to login to the WAFs.  The default value is "azureuser". |
 | adminPassword | x | A strong password for the WAFs. Remember this password; you will need it later. |
-| dnsNameForPublicIP | x | Unique DNS Name for the public IP address used to access the WAFs for management. |
-| licenseToken1 | x | The license token from the F5 licensing server. This license will be used for the first F5 WAF. |
-| licenseToken2 | x | The license token from the F5 licensing server. This license will be used for the second F5 WAF. This field is required in the cluster-WAF deployment scenarios. |
-| applicationName | x | A simple name for your application. |
+| dnsLabel | x | Unique DNS Name for the public IP address used to access the WAFs for management. |
+| licenseKey1 | x | The license token from the F5 licensing server. This license will be used for the first F5 WAF. |
+| licenseKey2 | x | The license token from the F5 licensing server. This license will be used for the second F5 WAF. This field is required in the cluster-WAF deployment scenarios. |
 | applicationProtocols | x | The protocol that will be used to configure the application virtual servers. The only allowed values for these templates are http, https, or https-offload. |
 | applicationAddress | x | The public IP address or DNS FQDN of the application that this WAF will protect. |
-| applicationServicePort | x | The unencrypted port that your application is listening on (for example, 80). This field is required in the http and https-offload deployment scenarios. |
-| applicationServiceSecurePort | x | The encrypted port that your application is listening on (for example, 443). This field is required in the https deployment scenario. |
+| applicationPort | x | The unencrypted port that your application is listening on (for example, 80). This field is required in the http and https-offload deployment scenarios. |
+| applicationSecurePort | x | The encrypted port that your application is listening on (for example, 443). This field is required in the https deployment scenario. |
 | applicationType | x | The operating system on which your application is running. (Linux OS or Windows OS). |
 | blockingLevel | x | The level of traffic you want to flag as insecure. All applications behind the WAF will use this level. The higher the level, the more traffic that is blocked. The lower the level, the more chances that unsecure traffic will make it through to your application. See the Security blocking levels topic for more information. |
 | customPolicy |  | The URL of a custom ASM security policy, in XML format, that you would like to apply to the deployment. |
-| applicationFQDN | x | The fully-qualified domain name of your application (for example, www.example.com). |
 | vaultName | x | The name of the Azure Key Vault where you have stored your SSL cert and key in .pfx format as a secret. This field is required in the https and https-offload deployment scenarios. |
 | vaultResourceGroup | x | The name of the Azure Resource Group where the previously entered Key Vault is located. This field is required in the https and https-offload deployment scenarios. |
-| httpssecretUrlWithVersion | x | The public URL of the Azure Key Vault secret where your SSL cert and key are stored in .pfx format. This field is required in the https and https-offload deployment scenarios. |
+| secretUrl | x | The public URL of the Azure Key Vault secret where your SSL cert and key are stored in .pfx format. This field is required in the https and https-offload deployment scenarios. |
 | certThumbprint | x | The thumbprint of the SSL cert stored in Azure Key Vault. This field is required in the https and https-offload deployment scenarios. |
+| restrictedSrcAddress | x | Restricts SSH access to a specific network or address. Enter a IP address or address range in CIDR notation, or asterisk for all sources. |
+| tagValues |  | A list of key-value pairs used to create tags on Azure resources. |
 
 ### Results ###
 
