@@ -2,7 +2,13 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "numberOFWAFs": {
+    "deploymentName": {
+      "type": "string",
+      "metadata": {
+        "description": "A unique name for this deployment."
+      }
+    },
+    "numberOfInstances": {
       "type": "int",
       "defaultValue": 2,
       "allowedValues": [ 2 ],
@@ -10,7 +16,7 @@
         "description": "The number of Web Application Firewalls that will be deployed in front of your application."
       }
     },
-    "vmSize": {
+    "instanceType": {
       "type": "string",
       "defaultValue": "Standard_A4",
       "metadata": {
@@ -42,32 +48,25 @@
         "description": "Password to login to the Web Application Firewall."
       }
     },
-    "dnsNameForPublicIP": {
+    "dnsLabel": {
       "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Web Application Firewalls for management."
       }
     },
-    "licenseToken1": {
+    "licenseKey1": {
       "type": "string",
       "defaultValue": "REQUIRED",
       "metadata": {
         "description": "The license token for the first F5 Web Application Firewall."
       }
     },
-    "licenseToken2": {
+    "licenseKey2": {
       "type": "string",
       "defaultValue": "REQUIRED",
       "metadata": {
         "description": "The license token for the second F5 Web Application Firewall. This field is required when deploying two or more WAFs."
       }     
-    },
-    "applicationName": {
-      "type": "string",
-      "defaultValue": "myAppName",
-      "metadata": {
-        "description": "Please provide a simple name for your application."
-      }
     },
     "applicationProtocols": {
       "type": "string",
@@ -83,7 +82,7 @@
         "description": "The public IP address or DNS FQDN of the application that this WAF will protect."
       }
     },
-    "applicationServiceSecurePort": {
+    "applicationSecurePort": {
       "type": "string",
       "defaultValue": "443",
       "metadata": {
@@ -121,13 +120,6 @@
         "description": "Specify the publicly available URL of a custom ASM security policy in XML format. This policy will be applied in place of the standard High/Medium/Low policy as indicated above."
       }
     },
-    "applicationFQDN": {
-      "type": "string",
-      "defaultValue": "www.contoso.com",
-      "metadata": {
-        "description": "The fully-qualified domain name of your application. (e.g. www.example.com)."
-      }
-    },
     "vaultName": {
       "type": "string",
       "defaultValue": "",
@@ -142,11 +134,11 @@
         "description": "Resource Group of the Azure Key Vault. This field is not required when deploying http only."
       }     
     },
-    "httpssecretUrlWithVersion": {
+    "secretUrl": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
-        "description": "Full Key Vault Id to the secret that stores the SSL cert. This field is not required when deploying http only."
+        "description": "Full Key Vault URL, including version, for the secret that stores the .pfx archive. This field is not required when deploying http only."
       }    
     },
     "certThumbprint": {
@@ -155,44 +147,66 @@
       "metadata": {
         "description": "The thumbprint of the SSL certificate you have stored in the Azure Key Vault."
       }    
+    },
+    "restrictedSrcAddress": {
+      "type": "string",
+      "defaultValue": "*",
+      "metadata": {
+        "description": "Restricts SSH access to a specific network or address. Enter a IP address or address range in CIDR notation, or asterisk for all sources."
+      }
+    },
+    "tagvalues": {
+      "type": "object",
+      "defaultValue": {
+        "application": "WAF",
+        "environment": "ENV",
+        "group": "GROUP",
+        "owner": "OWNER",
+        "cost": "COST"
+      }
     }
   },
   "variables": {
     "location": "[resourceGroup().location]",
-    "virtualNetworkName": "[concat(parameters('dnsNameForPublicIP'),'-vnet')]",
+    "virtualNetworkName": "[concat(parameters('dnsLabel'),'-vnet1')]",
     "vnetAddressPrefix": "10.10.0.0/16",
-    "subnetName": "[concat(parameters('dnsNameForPublicIP'),'-subNet')]",
+    "subnetName": "[concat(parameters('dnsLabel'),'-subnet1')]",
     "subnetPrefix": "10.10.1.0/24",
     "ipAddress": "10.10.1.",
-    "nicNamePrefix": "[concat(parameters('dnsNameForPublicIP'),'-nic')]",
-    "loadBalancerName": "[concat(parameters('dnsNameForPublicIP'),'-alb')]",
-    "availabilitySetName": "[concat(parameters('dnsNameForPublicIP'),'-avset')]",
-    "newStorageAccountName": "[concat(parameters('dnsNameForPublicIP'),'stor')]",
-    "wafNamePrefix": "[concat(parameters('dnsNameForPublicIP'),'-waf')]",
-    "nsgID": "[resourceId('Microsoft.Network/networkSecurityGroups/',concat(parameters('dnsNameForPublicIP'),'-nsg'))]",
+    "nicNamePrefix": "[concat(parameters('dnsLabel'),'-nic')]",
+    "loadBalancerName": "[concat(parameters('dnsLabel'),'-alb')]",
+    "availabilitySetName": "[concat(parameters('dnsLabel'),'-as')]",
+    "newStorageAccountName": "[concat(parameters('dnsLabel'),'st')]",
+    "wafNamePrefix": "[concat(parameters('dnsLabel'),'-waf')]",
+    "nsgID": "[resourceId('Microsoft.Network/networkSecurityGroups/',concat(parameters('dnsLabel'),'-nsg'))]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
     "guiMgtID": "[concat(variables('lbID'),'/inboundNatRules/guimgt')]",
     "sshMgtID": "[concat(variables('lbID'),'/inboundNatRules/sshmgt')]",
-    "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('dnsNameForPublicIP'))]",
+    "publicIPID": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('dnsLabel'))]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "singleQuote": "'",
-    "commandArgs": "[concat('-m ', parameters('applicationProtocols'), ' -d ', parameters('applicationFQDN'), ' -n ', parameters('applicationAddress'), ' -s ', parameters('applicationServiceSecurePort'), ' -t ', toLower(parameters('applicationType')), ' -l ', toLower(parameters('blockingLevel')), ' -a ', parameters('customPolicy'), ' -c ', parameters('certThumbprint'), ' -u ', parameters('adminUsername'), ' -p ', parameters('adminPassword'))]"
+    "commandArgs": "[concat('-m ', parameters('applicationProtocols'), ' -d ', parameters('deploymentName'), ' -n ', parameters('applicationAddress'), ' -s ', parameters('applicationSecurePort'), ' -t ', toLower(parameters('applicationType')), ' -l ', toLower(parameters('blockingLevel')), ' -a ', parameters('customPolicy'), ' -c ', parameters('certThumbprint'), ' -u ', parameters('adminUsername'), ' -p ', parameters('adminPassword'))]"
   },
   "resources": [
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[parameters('dnsNameForPublicIP')]",
+      "name": "[parameters('dnsLabel')]",
       "location": "[variables('location')]",
       "tags": {
-        "displayName": "PublicIPAddress"
+        "displayName": "PublicIPAddress",
+        "application": "[parameters('tagvalues').application]",
+        "environment": "[parameters('tagvalues').environment]",
+        "group": "[parameters('tagvalues').group]",
+        "owner": "[parameters('tagvalues').owner]",
+        "costCenter": "[parameters('tagvalues').cost]"
       },
       "properties": {
         "publicIPAllocationMethod": "Dynamic",
         "dnsSettings": {
-          "domainNameLabel": "[parameters('dnsNameForPublicIP')]"
+          "domainNameLabel": "[parameters('dnsLabel')]"
         }
       }
     },
@@ -202,7 +216,12 @@
       "name": "[variables('virtualNetworkName')]",
       "location": "[variables('location')]",
       "tags": {
-        "displayName": "VirtualNetwork"
+        "displayName": "VirtualNetwork",
+        "application": "[parameters('tagvalues').application]",
+        "environment": "[parameters('tagvalues').environment]",
+        "group": "[parameters('tagvalues').group]",
+        "owner": "[parameters('tagvalues').owner]",
+        "costCenter": "[parameters('tagvalues').cost]"
       },
       "properties": {
         "addressSpace": {
@@ -226,17 +245,22 @@
       "name": "[concat(variables('nicNamePrefix'),copyindex())]",
       "location": "[variables('location')]",
       "tags": {
-        "displayName": "NetworkInterface"
+        "displayName": "NetworkInterface",
+        "application": "[parameters('tagvalues').application]",
+        "environment": "[parameters('tagvalues').environment]",
+        "group": "[parameters('tagvalues').group]",
+        "owner": "[parameters('tagvalues').owner]",
+        "costCenter": "[parameters('tagvalues').cost]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'),'/inboundNatRules/guimgt',copyindex())]",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'),'/inboundNatRules/sshmgt',copyindex())]",
-        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('dnsNameForPublicIP'),'-nsg')]"
+        "[concat('Microsoft.Network/networkSecurityGroups/', parameters('dnsLabel'),'-nsg')]"
       ],
       "copy": {
-        "count": "[parameters('numberOFWAFs')]",
+        "count": "[parameters('numberOfInstances')]",
         "name": "niccopy"
       },
       "properties": {
@@ -273,12 +297,12 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "[concat(parameters('dnsNameForPublicIP'), '-nsg')]",
+      "name": "[concat(parameters('dnsLabel'), '-nsg')]",
       "location": "[variables('location')]",
       "properties": {
         "securityRules": [
           {
-            "name": "mgt_rule",
+            "name": "mgmt_allow_443",
             "properties": {
               "description": "",
               "priority": 101,
@@ -292,11 +316,11 @@
             }
           },
           {
-            "name": "ssh_rule",
+            "name": "ssh_allow_22",
             "properties": {
               "description": "",
               "priority": 102,
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('restrictedSrcAddress')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*",
               "destinationPortRange": "22",
@@ -306,7 +330,7 @@
             }
           },
           {
-            "name": "app_rule_8445",
+            "name": "app_allow_8445",
             "properties": {
               "description": "",
               "priority": 104,
@@ -325,7 +349,7 @@
     {
       "apiVersion": "2015-06-15",
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', parameters('dnsNameForPublicIP'))]"
+        "[concat('Microsoft.Network/publicIPAddresses/', parameters('dnsLabel'))]"
       ],
       "location": "[variables('location')]",
       "name": "[variables('loadBalancerName')]",
@@ -347,7 +371,7 @@
         ],
         "loadBalancingRules": [
           {
-            "Name": "lbrule8445",
+            "Name": "https-8445",
             "properties": {
               "frontendIPConfiguration": {
                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/frontendIpConfigurations/loadBalancerFrontEnd')]"
@@ -356,10 +380,10 @@
                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/backendAddressPools/loadBalancerBackEnd')]"
               },
               "probe": {
-                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/lbprobe8445')]"
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/tcp-8445')]"
               },
               "protocol": "Tcp",
-              "frontendPort": "[parameters('applicationServiceSecurePort')]",
+              "frontendPort": "[parameters('applicationSecurePort')]",
               "backendPort": 8445,
               "idleTimeoutInMinutes": 15
             }
@@ -373,7 +397,7 @@
               "intervalInSeconds": 15,
               "numberOfProbes": 2
             },
-            "name": "lbprobe8445"
+            "name": "tcp-8445"
           }
         ]
       },
@@ -386,7 +410,7 @@
       "location": "[variables('location')]",
       "copy": {
         "name": "lbNatLoop",
-        "count": "[parameters('numberOFWAFs')]"
+        "count": "[parameters('numberOfInstances')]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
@@ -408,7 +432,7 @@
       "location": "[variables('location')]",
       "copy": {
         "name": "lbNatLoop",
-        "count": "[parameters('numberOFWAFs')]"
+        "count": "[parameters('numberOfInstances')]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
@@ -435,7 +459,12 @@
       "name": "[concat(variables('wafNamePrefix'),copyindex())]",
       "location": "[variables('location')]",
       "tags": {
-        "displayName": "WAFs"
+        "displayName": "WAFs",
+        "application": "[parameters('tagvalues').application]",
+        "environment": "[parameters('tagvalues').environment]",
+        "group": "[parameters('tagvalues').group]",
+        "owner": "[parameters('tagvalues').owner]",
+        "costCenter": "[parameters('tagvalues').cost]"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicNamePrefix'), copyindex())]",
@@ -443,7 +472,7 @@
         "[concat('Microsoft.Storage/storageAccounts/', variables('newStorageAccountName'))]"
       ],
       "copy": {
-        "count": "[parameters('numberOFWAFs')]",
+        "count": "[parameters('numberOfInstances')]",
         "name": "wafcopy"
       },
       "plan": {
@@ -456,7 +485,7 @@
           "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetName'))]"
         },
         "hardwareProfile": {
-          "vmSize": "[parameters('vmSize')]"
+          "vmSize": "[parameters('instanceType')]"
         },
         "osProfile": {
           "computerName": "[concat(variables('wafNamePrefix'),copyindex())]",
@@ -469,7 +498,7 @@
                 },
                 "vaultCertificates": [
                   {
-                    "certificateUrl": "[parameters('httpssecretUrlWithVersion')]"
+                    "certificateUrl": "[parameters('secretUrl')]"
                   }
                 ]
               }
@@ -533,7 +562,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseToken1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --update-sigs --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/cluster.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 4), ' --create-group --device-group Sync --sync-type sync-failover --device ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --auto-sync --save-on-auto-sync --asm-sync', '\"')]"
+          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseKey1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --update-sigs --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/cluster.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 4), ' --create-group --device-group Sync --sync-type sync-failover --device ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --auto-sync --save-on-auto-sync --asm-sync', '\"')]"
         }
       }
      },
@@ -541,7 +570,7 @@
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "copy": {
         "name": "extensionLoop",
-        "count": "[sub(parameters('numberOfWAFs'), 1)]"
+        "count": "[sub(parameters('numberOfInstances'), 1)]"
       },
       "name": "[concat(variables('wafNamePrefix'),add(copyindex(),1),'/start')]",
       "apiVersion": "2016-03-30",
@@ -559,7 +588,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), copyindex(1), '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseToken2'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/cluster.log --log-level debug --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 5), ' --join-group --device-group Sync --sync --remote-host ', concat(variables('ipAddress'), 4), ' --remote-user admin --remote-password ', parameters('adminPassword'), ' --signal CLUSTER_DONE \" --script \" --wait-for CLUSTER_DONE --output /var/log/runScript.log --log-level debug --url http://cdn-prod-ore-f5.s3-website-us-west-2.amazonaws.com/product/blackbox/staging/azure/deploy_waf.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), '\"')]"
+          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), copyindex(1), '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseKey2'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/cluster.log --log-level debug --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 5), ' --join-group --device-group Sync --sync --remote-host ', concat(variables('ipAddress'), 4), ' --remote-user admin --remote-password ', parameters('adminPassword'), ' --signal CLUSTER_DONE \" --script \" --wait-for CLUSTER_DONE --output /var/log/runScript.log --log-level debug --url http://cdn-prod-ore-f5.s3-website-us-west-2.amazonaws.com/product/blackbox/staging/azure/deploy_waf.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), '\"')]"
         }
       }
     }
