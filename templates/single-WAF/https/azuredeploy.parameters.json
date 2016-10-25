@@ -2,23 +2,23 @@
      "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
      "contentVersion": "1.0.0.0",
      "parameters": {
-          "numberOFWAFs": {
+          "deploymentName": {
+               "value": "GEN-UNIQUE"
+          },
+          "numberOfInstances": {
                "value": "1"
           },
-          "vmSize": {
+          "instanceType": {
                "value": "Standard_A4"
           },
           "adminUsername": {
                "value": "azureuser"
           },
-          "dnsNameForPublicIP": {
+          "dnsLabel": {
                "value": "GEN-UNIQUE"
           },
-          "licenseToken1": {
+          "licenseKey1": {
                "value": "GEN-UNIQUE"
-          },
-          "applicationName": {
-               "value": "myAppName"
           },
           "applicationProtocols": {
                "value": "https"
@@ -26,7 +26,7 @@
           "applicationAddress": {
                "value": "GEN-UNIQUE"
           },
-          "applicationServiceSecurePort": {
+          "applicationSecurePort": {
                "value": "443"
           },
           "applicationType": {
@@ -38,20 +38,29 @@
           "customPolicy": {
                "value": "NOT_SPECIFIED",
           },
-          "applicationFQDN": {
-               "value": "www.contoso.com"
-          },
           "vaultName": {
                "value": "GEN-UNIQUE"
           },
           "vaultResourceGroup": {
                "value": "GEN-UNIQUE"
           },
-          "httpssecretUrlWithVersion": {
+          "secretUrl": {
                "value": "GEN-UNIQUE"
           },
           "certThumbprint": {
                "value": "GEN-UNIQUE"
-          }
+          },
+          "restrictedSrcAddress": {
+               "value": "*"
+         },
+         "tagvalues": {
+               "value": {
+                    "application": "WAF",
+                    "environment": "ENV",
+                    "group": "GROUP",
+                    "owner": "OWNER",
+                    "cost": "COST"
+               }
+         }
      }
 }

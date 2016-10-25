@@ -5,19 +5,23 @@
 param(
 [Parameter(Mandatory=$True)]
 [string]
-$vmSize,
+$deploymentName,
 
 [Parameter(Mandatory=$True)]
 [string]
-$dnsLabelPrefix,
+$instanceType,
 
 [Parameter(Mandatory=$True)]
 [string]
-$licenseToken1,
+$dnsLabel,
 
 [Parameter(Mandatory=$True)]
 [string]
-$licenseToken2,
+$licenseKey1,
+
+[Parameter(Mandatory=$True)]
+[string]
+$licenseKey2,
 
 [Parameter(Mandatory=$True)]
 [string]
@@ -29,6 +33,22 @@ $applicationAddress,
 
 [Parameter(Mandatory=$True)]
 [string]
+$applicationType,
+
+[Parameter(Mandatory=$True)]
+[string]
+$blockingLevel,
+
+[Parameter(Mandatory=$True)]
+[string]
+$customPolicy,
+
+[Parameter(Mandatory=$True)]
+[string]
+$restrictedSrcAddress,
+
+[Parameter(Mandatory=$True)]
+[string]
 $vaultResourceGroup,
 
 [Parameter(Mandatory=$True)]
@@ -37,14 +57,14 @@ $vaultName,
 
 [Parameter(Mandatory=$True)]
 [string]
-$httpssecretUrlWithVersion,
+$secretUrl,
 
 [Parameter(Mandatory=$True)]
 [string]
 $certThumbprint,
 
 [string]
-$deploymentName = $dnsLabelPrefix,
+$deploymentName = $dnsLabel,
 
 [string]
 $region = "West US",
@@ -67,7 +87,8 @@ New-AzureRmResourceGroup -Name $deploymentName -Location "$region"
 
 # Create Arm Deployment
 $pwd = ConvertTo-SecureString -String $adminPassword -AsPlainText -Force
-$deployment = New-AzureRmResourceGroupDeployment -Name $deploymentName -ResourceGroupName $deploymentName -TemplateFile $templateFilePath -TemplateParameterFile $parametersFilePath -vmSize $vmSize -adminPassword $pwd -dnsLabelPrefix $dnsLabelPrefix -licenseToken1 "$licenseToken1" -licenseToken2 "$licenseToken2" -applicationAddress $applicationAddress -applicationType $applicationType -blockingLevel $blockingLevel -customPolicy $customPolicy -vaultResourceGroup $vaultResourceGroup -vaultName $vaultName -httpssecretUrlWithVersion $httpssecretUrlWithVersion -certThumbprint $certThumbprint
+
+$deployment = New-AzureRmResourceGroupDeployment -Name $dnsLabel -ResourceGroupName $dnsLabel -TemplateFile $templateFilePath -TemplateParameterFile $parametersFilePath -instanceType $instanceType -adminPassword $pwd -dnsLabel $dnsLabel -licenseKey1 "$licenseKey1" -licenseKey2 "$licenseKey2" -applicationAddress $applicationAddress -applicationType $applicationType -blockingLevel $blockingLevel -customPolicy $customPolicy -vaultResourceGroup $vaultResourceGroup -vaultName $vaultName -secretUrl $secretUrl -certThumbprint $certThumbprint -restrictedSrcAddress $restrictedSrcAddress
 
 # Print Output of Deployment to Console
 $deployment
