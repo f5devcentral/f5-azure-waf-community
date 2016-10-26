@@ -63,7 +63,7 @@ You cannot change the security blocking level after you create the WAF, so be su
 | vaultResourceGroup | x | The name of the Azure Resource Group where the previously entered Key Vault is located. This field is required in the https and https-offload deployment scenarios. |
 | secretUrl | x | The public URL of the Azure Key Vault secret where your SSL cert and key are stored in .pfx format. This field is required in the https and https-offload deployment scenarios. |
 | certThumbprint | x | The thumbprint of the SSL cert stored in Azure Key Vault. This field is required in the https and https-offload deployment scenarios. |
-| restrictedSrcAddress | x | Restricts SSH access to a specific network or address. Enter a IP address or address range in CIDR notation, or asterisk for all sources. |
+| restrictedSrcAddress | x | Restricts management access to a specific network or address. Enter a IP address or address range in CIDR notation, or asterisk for all sources. |
 | tagValues |  | A list of key-value pairs used to create tags on Azure resources. |
 
 ### Results ###
