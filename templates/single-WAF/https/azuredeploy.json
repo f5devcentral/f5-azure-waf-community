@@ -145,7 +145,7 @@
       "type": "string",
       "defaultValue": "*",
       "metadata": {
-        "description": "Restricts SSH access to a specific network or address. Enter a IP address or address range in CIDR notation, or asterisk for all sources."
+        "description": "Restricts management access to a specific network or address. Enter a IP address or address range in CIDR notation, or asterisk for all sources."
       }
     },
     "tagValues": {
@@ -292,6 +292,14 @@
       "type": "Microsoft.Network/networkSecurityGroups",
       "name": "[concat(parameters('dnsLabel'), '-nsg')]",
       "location": "[variables('location')]",
+      "tags": {
+        "displayName": "NetworkSecurityGroup",
+        "application": "[parameters('tagValues').application]",
+        "environment": "[parameters('tagValues').environment]",
+        "group": "[parameters('tagValues').group]",
+        "owner": "[parameters('tagValues').owner]",
+        "costCenter": "[parameters('tagValues').cost]"
+      },
       "properties": {
         "securityRules": [
           {
@@ -299,7 +307,7 @@
             "properties": {
               "description": "",
               "priority": 101,
-              "sourceAddressPrefix": "*",
+              "sourceAddressPrefix": "[parameters('restrictedSrcAddress')]",
               "sourcePortRange": "*",
               "destinationAddressPrefix": "*",
               "destinationPortRange": "443",
@@ -345,6 +353,14 @@
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('dnsLabel'))]"
       ],
       "location": "[variables('location')]",
+      "tags": {
+        "displayName": "LoadBalancer",
+        "application": "[parameters('tagValues').application]",
+        "environment": "[parameters('tagValues').environment]",
+        "group": "[parameters('tagValues').group]",
+        "owner": "[parameters('tagValues').owner]",
+        "costCenter": "[parameters('tagValues').cost]"
+      },
       "name": "[variables('loadBalancerName')]",
       "properties": {
         "frontendIPConfigurations": [
@@ -443,6 +459,14 @@
     {
       "apiVersion": "2015-06-15",
       "location": "[variables('location')]",
+      "tags": {
+        "displayName": "AvailabilitySet",
+        "application": "[parameters('tagValues').application]",
+        "environment": "[parameters('tagValues').environment]",
+        "group": "[parameters('tagValues').group]",
+        "owner": "[parameters('tagValues').owner]",
+        "costCenter": "[parameters('tagValues').cost]"
+      },
       "name": "[variables('availabilitySetName')]",
       "type": "Microsoft.Compute/availabilitySets"
     },
@@ -452,7 +476,7 @@
       "name": "[concat(variables('wafNamePrefix'),copyindex())]",
       "location": "[variables('location')]",
       "tags": {
-        "displayName": "WAFs",
+        "displayName": "VirtualMachine",
         "application": "[parameters('tagValues').application]",
         "environment": "[parameters('tagValues').environment]",
         "group": "[parameters('tagValues').group]",
@@ -532,6 +556,14 @@
       "name": "[variables('newStorageAccountName')]",
       "type": "Microsoft.Storage/storageAccounts",
       "location": "[variables('location')]",
+      "tags": {
+        "displayName": "StorageAccount",
+        "application": "[parameters('tagValues').application]",
+        "environment": "[parameters('tagValues').environment]",
+        "group": "[parameters('tagValues').group]",
+        "owner": "[parameters('tagValues').owner]",
+        "costCenter": "[parameters('tagValues').cost]"
+      },
       "apiVersion": "2015-06-15",
       "properties": {
         "accountType": "Standard_LRS"
