@@ -160,6 +160,7 @@
     }
   },
   "variables": {
+    "f5CloudLibsTag": "v1.0.0", 
     "location": "[resourceGroup().location]",
     "virtualNetworkName": "[concat(parameters('dnsLabel'),'-vnet1')]",
     "vnetAddressPrefix": "10.10.0.0/16",
@@ -583,11 +584,12 @@
         "typeHandlerVersion": "2.0",
         "settings": {
           "fileUris": [
-            "https://f5cloudlibs.blob.core.windows.net/archive/runScripts.js"
+            "[concat('https://raw.githubusercontent.com/F5Networks/f5-cloud-libs/', variables('f5CloudLibsTag'), '/scripts/azure/runScripts.js')]",
+            "[concat('https://api.github.com/repos/F5Networks/f5-cloud-libs/tarball/', variables('f5CloudLibsTag'))]"
           ]
         },
         "protectedSettings": {
-           "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseKey1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --update-sigs --signal ONBOARD_DONE \" --script \" --wait-for ONBOARD_DONE --output /var/log/runScript.log --log-level debug --url http://cdn-prod-ore-f5.s3-website-us-west-2.amazonaws.com/product/blackbox/staging/azure/deploy_waf.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), '\"')]"
+           "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --tag ', variables('f5CloudLibsTag'), ' --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseKey1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --update-sigs --signal ONBOARD_DONE \" --script \" --wait-for ONBOARD_DONE --output /var/log/runScript.log --log-level debug --url http://cdn.f5.com/product/blackbox/staging/azure/deploy_waf.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), '\"')]"
         }
       }
      }
