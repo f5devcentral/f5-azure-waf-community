@@ -44,7 +44,7 @@ You cannot change the security blocking level after you create the WAF, so be su
 
 | Parameter | Required | Description |
 | --- | --- | --- |
-| deploymentName | x | A simple name for your application. |
+| solutionDeploymentName | x | A simple name for your application. |
 | numberOfIntances | x | The number of WAFs that will be deployed in front of your application.  This value is hard coded at 1 or 2, depending on the template you selected. |
 | instanceType | x | The desired Azure Virtual Machine instance size. |
 | adminUsername | x | A user name to login to the WAFs.  The default value is "azureuser". |

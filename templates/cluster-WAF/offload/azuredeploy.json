@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "deploymentName": {
+    "solutionDeploymentName": {
       "type": "string",
       "metadata": {
         "description": "A unique name for this deployment."
@@ -195,7 +195,7 @@
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "singleQuote": "'",
-    "commandArgs": "[concat('-m ', parameters('applicationProtocols'), ' -d ', parameters('deploymentName'), ' -n ', parameters('applicationAddress'), ' -h ', parameters('applicationPort'), ' -t ', toLower(parameters('applicationType')), ' -l ', toLower(parameters('blockingLevel')), ' -a ', parameters('customPolicy'), ' -c ', parameters('certThumbprint'), ' -u ', parameters('adminUsername'), ' -p ', parameters('adminPassword'))]"
+    "commandArgs": "[concat('-m ', parameters('applicationProtocols'), ' -d ', parameters('solutionDeploymentName'), ' -n ', parameters('applicationAddress'), ' -h ', parameters('applicationPort'), ' -t ', toLower(parameters('applicationType')), ' -l ', toLower(parameters('blockingLevel')), ' -a ', parameters('customPolicy'), ' -c ', parameters('certThumbprint'), ' -u ', parameters('adminUsername'), ' -p ', parameters('adminPassword'))]"
   },
   "resources": [
     {
