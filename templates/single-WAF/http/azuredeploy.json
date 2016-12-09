@@ -132,7 +132,7 @@
     }
   },
   "variables": {
-    "f5CloudLibsTag": "v1.0.0", 
+    "f5CloudLibsTag": "v1.2.0", 
     "location": "[resourceGroup().location]",
     "virtualNetworkName": "[concat(parameters('dnsLabel'),'-vnet1')]",
     "vnetAddressPrefix": "10.10.0.0/16",
