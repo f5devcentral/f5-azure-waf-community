@@ -493,7 +493,7 @@
           "imageReference": {
             "publisher": "f5-networks",
             "offer": "f5-big-ip-hourly",
-            "[variables('skuToUse')]",
+            "sku": "[variables('skuToUse')]",
             "version": "latest"
           },
           "osDisk": {
