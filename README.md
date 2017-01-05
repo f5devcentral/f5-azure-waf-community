@@ -14,9 +14,8 @@ The configuration will look like the following diagram, with two separate Azure 
 As traffic passes through the WAF, alerts are logged locally about possible violations. The amount of traffic that is flagged depends on the security blocking level you choose when you create the WAF.
 
 ### F5 WAF instance types and pricing tiers ###
-Before you secure web applications with an F5 WAF, you need a license from F5.
 
-You choose the license and corresponding Azure instance based on the number of cores and throughput you need. The instances listed below are minimums; you can choose larger instances if you want.
+You choose the throughput and corresponding Azure instance based on the number of cores and throughput you need. The instances listed below are minimums; you can choose larger instances if you want.
 
 | Cores | Througput | Minimum Azure Instance |
 | --- | --- | --- |
@@ -47,11 +46,10 @@ You cannot change the security blocking level after you create the WAF, so be su
 | solutionDeploymentName | x | A simple name for your application. |
 | numberOfIntances | x | The number of WAFs that will be deployed in front of your application.  This value is hard coded at 1 or 2, depending on the template you selected. |
 | instanceType | x | The desired Azure Virtual Machine instance size. |
+| instanceThroughput | x | The desired Azure Virtual Machine instance throughput. The values are 1G, 200M, and 25M. |
 | adminUsername | x | A user name to login to the WAFs.  The default value is "azureuser". |
 | adminPassword | x | A strong password for the WAFs. Remember this password; you will need it later. |
 | dnsLabel | x | Unique DNS Name for the public IP address used to access the WAFs for management. |
-| licenseKey1 | x | The license token from the F5 licensing server. This license will be used for the first F5 WAF. |
-| licenseKey2 | x | The license token from the F5 licensing server. This license will be used for the second F5 WAF. This field is required in the cluster-WAF deployment scenarios. |
 | applicationProtocols | x | The protocol that will be used to configure the application virtual servers. The only allowed values for these templates are http, https, or https-offload. |
 | applicationAddress | x | The public IP address or DNS FQDN of the application that this WAF will protect. |
 | applicationPort | x | The unencrypted port that your application is listening on (for example, 80). This field is required in the http and https-offload deployment scenarios. |

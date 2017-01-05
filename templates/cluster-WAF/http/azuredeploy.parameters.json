@@ -11,16 +11,13 @@
           "instanceType": {
                "value": "Standard_A4"
           },
+          "instanceThroughput": {
+               "value": "1G"
+          },
           "adminUsername": {
                "value": "azureuser"
           },
           "dnsLabel": {
-               "value": "GEN-UNIQUE"
-          },
-          "licenseKey1": {
-               "value": "GEN-UNIQUE"
-          },
-          "licenseKey2": {
                "value": "GEN-UNIQUE"
           },
           "applicationProtocols": {

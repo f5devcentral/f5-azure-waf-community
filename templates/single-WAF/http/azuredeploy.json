@@ -35,6 +35,18 @@
         "Standard_F4"
       ]
     },
+    "instanceThroughput": {
+      "type": "string",
+      "defaultValue": "1G",
+      "metadata": {
+        "description": "The licensed throughput of the Virtual Hardware Instance."
+      },
+      "allowedValues": [
+        "1G",
+        "200M",
+        "25M"
+      ]
+    },
     "adminUsername": {
       "type": "string",
       "defaultValue": "azureuser",
@@ -52,13 +64,6 @@
       "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Web Application Firewalls for management."
-      }
-    },
-    "licenseKey1": {
-      "type": "string",
-      "defaultValue": "REQUIRED",
-      "metadata": {
-        "description": "The license token for the first F5 Web Application Firewall."
       }
     },
     "applicationProtocols": {
@@ -132,8 +137,10 @@
     }
   },
   "variables": {
-    "f5CloudLibsTag": "v1.2.0", 
+    "f5CloudLibsTag": "develop", 
     "location": "[resourceGroup().location]",
+    "instanceThroughputToLower": "[toLower(parameters('instanceThroughput'))]",
+    "skuToUse": "[concat('f5-bigip-virtual-edition-', variables('instanceThroughputToLower'),'-best-hourly')]",
     "virtualNetworkName": "[concat(parameters('dnsLabel'),'-vnet1')]",
     "vnetAddressPrefix": "10.10.0.0/16",
     "subnetName": "[concat(parameters('dnsLabel'),'-subnet1')]",
@@ -466,9 +473,9 @@
         "name": "wafcopy"
       },
       "plan": {
-        "name": "f5-waf-solution-byol",
+        "name": "[variables('skuToUse')]",
         "publisher": "f5-networks",
-        "product": "f5-web-application-firewall"
+        "product": "f5-big-ip-hourly"
       },
       "properties": {
         "availabilitySet": {
@@ -485,8 +492,8 @@
         "storageProfile": {
           "imageReference": {
             "publisher": "f5-networks",
-            "offer": "f5-web-application-firewall",
-            "sku": "f5-waf-solution-byol",
+            "offer": "f5-big-ip-hourly",
+            "[variables('skuToUse')]",
             "version": "latest"
           },
           "osDisk": {
@@ -549,7 +556,7 @@
           ]
         },
         "protectedSettings": {
-             "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --tag ', variables('f5CloudLibsTag'), ' --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseKey1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --update-sigs --signal ONBOARD_DONE \" --script \" --wait-for ONBOARD_DONE --output /var/log/runScript.log --log-level debug --url http://cdn.f5.com/product/blackbox/staging/azure/deploy_waf.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), '\"')]"
+             "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --tag ', variables('f5CloudLibsTag'), ' --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --update-user user:admin,password:', parameters('adminPassword'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --update-sigs --signal ONBOARD_DONE \" --script \" --wait-for ONBOARD_DONE --output /var/log/runScript.log --log-level debug --url http://cdn.f5.com/product/blackbox/staging/azure/deploy_waf.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), '\"')]"
         }
       }
      }

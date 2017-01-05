@@ -11,7 +11,7 @@
     "numberOfInstances": {
       "type": "int",
       "defaultValue": 2,
-      "allowedValues": [ 2 ],
+      "allowedValues": [ 2, 3, 4 ],
       "metadata": {
         "description": "The number of Web Application Firewalls that will be deployed in front of your application."
       }
@@ -35,6 +35,18 @@
         "Standard_F4"
       ]
     },
+    "instanceThroughput": {
+      "type": "string",
+      "defaultValue": "1G",
+      "metadata": {
+        "description": "The licensed throughput of the Virtual Hardware Instance."
+      },
+      "allowedValues": [
+        "1G",
+        "200M",
+        "25M"
+      ]
+    },
     "adminUsername": {
       "type": "string",
       "defaultValue": "azureuser",
@@ -53,20 +65,6 @@
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Web Application Firewalls for management."
       }
-    },
-    "licenseKey1": {
-      "type": "string",
-      "defaultValue": "REQUIRED",
-      "metadata": {
-        "description": "The license token for the first F5 Web Application Firewall."
-      }
-    },
-    "licenseKey2": {
-      "type": "string",
-      "defaultValue": "REQUIRED",
-      "metadata": {
-        "description": "The license token for the second F5 Web Application Firewall. This field is required when deploying two or more WAFs."
-      }     
     },
     "applicationProtocols": {
       "type": "string",
@@ -174,8 +172,10 @@
     }
   },
   "variables": {
-    "f5CloudLibsTag": "v1.2.0", 
+    "f5CloudLibsTag": "develop", 
     "location": "[resourceGroup().location]",
+    "instanceThroughputToLower": "[toLower(parameters('instanceThroughput'))]",
+    "skuToUse": "[concat('f5-bigip-virtual-edition-', variables('instanceThroughputToLower'),'-best-hourly')]",
     "virtualNetworkName": "[concat(parameters('dnsLabel'),'-vnet1')]",
     "vnetAddressPrefix": "10.10.0.0/16",
     "subnetName": "[concat(parameters('dnsLabel'),'-subnet1')]",
@@ -508,9 +508,9 @@
         "name": "wafcopy"
       },
       "plan": {
-        "name": "f5-waf-solution-byol",
+        "name": "[variables('skuToUse')]",
         "publisher": "f5-networks",
-        "product": "f5-web-application-firewall"
+        "product": "f5-big-ip-hourly"
       },
       "properties": {
         "availabilitySet": {
@@ -539,8 +539,8 @@
         "storageProfile": {
           "imageReference": {
             "publisher": "f5-networks",
-            "offer": "f5-web-application-firewall",
-            "sku": "f5-waf-solution-byol",
+            "offer": "f5-big-ip-hourly",
+            "sku": "[variables('skuToUse')]",
             "version": "latest"
           },
           "osDisk": {
@@ -603,7 +603,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --tag ', variables('f5CloudLibsTag'), ' --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseKey1'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --update-sigs --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/cluster.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 4), ' --create-group --device-group Sync --sync-type sync-failover --device ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --auto-sync --save-on-auto-sync --asm-sync', '\"')]"
+          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --tag ', variables('f5CloudLibsTag'), ' --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --update-user user:admin,password:', parameters('adminPassword'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --update-sigs --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/clusterGroup.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --create-group --device-group Sync --sync-type sync-failover --device ', concat(variables('wafNamePrefix'), 0, '.azuresecurity.com'), ' --auto-sync --save-on-auto-sync --asm-sync --signal SYNC_GROUP_DONE \" --script \" --wait-for SYNC_GROUP_DONE --output /var/log/runScript.log --log-level debug --url http://cdn.f5.com/product/blackbox/staging/azure/deploy_waf.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), ' --signal SCRIPT_DONE \" --cluster \" --wait-for SCRIPT_DONE --output /var/log/clusterSync.log --log-level debug --host ', concat(variables('ipAddress'), 4), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 4), ' --signal CLUSTER_DONE \"')]"
         }
       }
      },
@@ -613,11 +613,11 @@
         "name": "extensionLoop",
         "count": "[sub(parameters('numberOfInstances'), 1)]"
       },
-      "name": "[concat(variables('wafNamePrefix'),add(copyindex(),1),'/start')]",
+      "name": "[concat(variables('wafNamePrefix'),copyindex(1),'/start')]",
       "apiVersion": "2016-03-30",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),add(copyindex(),1))]"
+        "[concat('Microsoft.Compute/virtualMachines/',variables('wafNamePrefix'),copyindex(1))]"
       ],
       "properties": {
         "publisher": "Microsoft.Azure.Extensions",
@@ -630,7 +630,7 @@
           ]
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --tag ', variables('f5CloudLibsTag'), ' --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), copyindex(1), '.azuresecurity.com'), ' --set-password admin:', parameters('adminPassword'), ' --license ', parameters('licenseKey2'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/cluster.log --log-level debug --host ', concat(variables('ipAddress'), 5), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), 5), ' --join-group --device-group Sync --sync --remote-host ', concat(variables('ipAddress'), 4), ' --remote-user admin --remote-password ', parameters('adminPassword'), ' --signal CLUSTER_DONE \" --script \" --wait-for CLUSTER_DONE --output /var/log/runScript.log --log-level debug --url http://cdn.f5.com/product/blackbox/staging/azure/deploy_waf.sh --cl-args ', variables('singleQuote'), variables('commandArgs'), variables('singleQuote'), '\"')]"
+          "commandToExecute": "[concat('f5-rest-node ./runScripts.js --log-level debug --tag ', variables('f5CloudLibsTag'), ' --onboard \" --output /var/log/onboard.log --log-level debug --host ', concat(variables('ipAddress'), copyIndex(5)), ' -u admin -p ', parameters('adminPassword'), ' --hostname ', concat(variables('wafNamePrefix'), copyindex(1), '.azuresecurity.com'), ' --update-user user:admin,password:', parameters('adminPassword'), ' --db provision.1nicautoconfig:disable --db tmm.maxremoteloglength:2048 --module ltm:nominal --module asm:nominal --module afm:none --signal ONBOARD_DONE \" --cluster \" --wait-for ONBOARD_DONE --output /var/log/cluster.log --log-level debug --host ', concat(variables('ipAddress'), copyIndex(5)), ' -u admin -p ', parameters('adminPassword'), ' --config-sync-ip ', concat(variables('ipAddress'), copyIndex(5)), ' --join-group --device-group Sync --sync --remote-host ', concat(variables('ipAddress'), 4), ' --remote-user admin --remote-password ', parameters('adminPassword'), ' --signal CLUSTER_DONE \"')]"
         }
       }
     }
